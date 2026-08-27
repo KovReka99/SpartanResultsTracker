@@ -547,15 +547,37 @@ async function refresh() {
   try {
     const raw = await fetchJson(buildApiUrl());
     teams = processEntries(raw);
+    const totalEntries = raw.length;
+    const stgTeamCount = Object.keys(teams).length;
+
+    if (totalEntries === 0) {
+      setStatus('Got a response but it was empty — wrong URL?');
+      document.getElementById('my-team').innerHTML =
+        `<div class="err-box">No data returned. Double-check the URL has both <b>id=</b> and <b>idTrack=</b> in it.</div>`;
+      return;
+    }
+
+    if (stgTeamCount === 0) {
+      setStatus(`Loaded ${totalEntries} entries — no STG teams found in this category`);
+      document.getElementById('my-team').innerHTML =
+        `<div class="info-box">Loaded ${totalEntries} results but found no STG teams.<br><br>
+        This is normal if you used a non-STG category URL (e.g. BEAST/SPRINT).<br>
+        On race day, select the <b>STG / Ultra</b> category on live.onlinesystem.cz first.</div>`;
+      document.getElementById('rankings').innerHTML = '';
+      document.getElementById('team-count').textContent = '';
+      return;
+    }
+
     renderMyTeam();
     renderRankings();
     countdown = INTERVAL;
     updateStatus();
     startTicker();
   } catch (e) {
-    setStatus(`Error: ${e.message}`);
+    setStatus(`Failed to load — ${e.message}`);
     document.getElementById('my-team').innerHTML =
-      `<div class="err-box">${esc(e.message)}</div>`;
+      `<div class="err-box"><b>Could not load results.</b><br><br>${esc(e.message)}<br><br>
+      Check your internet connection and try Refresh.</div>`;
   }
 }
 
