@@ -33,6 +33,23 @@
     .btn-sm {
       background: #b01020; color: #fff; border: none;
       padding: 4px 12px; border-radius: 4px; font-size: 12px; cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .btn-sm:disabled { opacity: 0.5; cursor: default; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .btn-sm.spinning { display: inline-block; animation: spin 0.7s linear infinite; }
+
+    .loading-bar { height: 3px; background: #1c1c1c; overflow: hidden; display: none; position: relative; }
+    .loading-bar.active { display: block; }
+    @keyframes bar-slide {
+      0%   { left: -40%; width: 40%; }
+      60%  { width: 55%; }
+      100% { left: 110%; width: 10%; }
+    }
+    .loading-bar::after {
+      content: ''; position: absolute; top: 0; height: 3px;
+      background: linear-gradient(90deg, transparent, #ff3040, transparent);
+      animation: bar-slide 1.1s ease-in-out infinite;
     }
 
     /* ── Settings panel ── */
@@ -156,8 +173,9 @@
 
 <div class="status-bar">
   <span id="status-text">Loading…</span>
-  <button class="btn-sm" onclick="manualRefresh()">↻ Refresh</button>
+  <button class="btn-sm" id="refresh-btn" onclick="manualRefresh()">↻ Refresh</button>
 </div>
+<div class="loading-bar" id="loading-bar"></div>
 
 <!-- ── Settings panel ── -->
 <div id="settings-panel">
@@ -541,14 +559,29 @@ function toggleDetail(id) {
 // ── Status ────────────────────────────────────────────────
 function setStatus(msg) { document.getElementById('status-text').textContent = msg; }
 
+function setLoading(on) {
+  document.getElementById('loading-bar').classList.toggle('active', on);
+  const btn = document.getElementById('refresh-btn');
+  btn.classList.toggle('spinning', on);
+  btn.disabled = on;
+}
+
+function fmtUpdated(s) {
+  if (!s) return '';
+  const d = new Date(s);
+  if (!isNaN(d)) return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  return s; // fallback for old "HH:MM UTC" format
+}
+
 function updateStatus() {
-  const n    = Object.values(teams).reduce((s, m) => s + m.filter(x => x.secs).length, 0);
-  const age  = lastUpdated ? ` · data from ${lastUpdated}` : '';
+  const n   = Object.values(teams).reduce((s, m) => s + m.filter(x => x.secs).length, 0);
+  const age = lastUpdated ? ` · data from ${fmtUpdated(lastUpdated)}` : '';
   setStatus(`${n} finishers · refresh in ${countdown}s${age}`);
 }
 
 // ── Refresh ───────────────────────────────────────────────
 async function refresh() {
+  setLoading(true);
   setStatus('Loading…');
   try {
     const { data, updated, raceName, message } = await fetchData();
@@ -590,6 +623,8 @@ async function refresh() {
     setStatus('Error loading data');
     document.getElementById('my-team').innerHTML =
       `<div class="err-box"><b>Could not load results</b><br><br>${esc(e.message)}</div>`;
+  } finally {
+    setLoading(false);
   }
 }
 

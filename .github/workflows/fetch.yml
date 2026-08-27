@@ -23,7 +23,7 @@ jobs:
           EVENT_ID=$(jq -r '.eventId' config.json)
           TRACK_ID=$(jq -r '.idTrack' config.json)
           RACE_NAME=$(jq -r '.raceName' config.json)
-          TIMESTAMP=$(date -u +"%H:%M UTC")
+          TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 
           echo "Event: $RACE_NAME  |  eventId=$EVENT_ID  idTrack=$TRACK_ID"
 
