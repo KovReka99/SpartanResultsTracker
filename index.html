@@ -161,7 +161,14 @@ async function fetchData() {
   // File can be: plain array, {updated,data:[...]}, or {status,message}
   if (Array.isArray(json)) return { data: json, updated: null, raceName: null };
   if (json.status === 'waiting') return { data: [], updated: null, raceName: null, message: json.message };
-  if (json.data)                 return { data: json.data, updated: json.updated || null, raceName: json.raceName || null };
+  if (json.data !== undefined) {
+    // API may return a plain array or {total:N, data:[...]}
+    const raw = json.data;
+    const arr = Array.isArray(raw) ? raw
+              : Array.isArray(raw.data) ? raw.data
+              : [];
+    return { data: arr, updated: json.updated || null, raceName: json.raceName || null };
+  }
   return { data: [], updated: null, raceName: null };
 }
 
@@ -186,6 +193,7 @@ function pad(n) { return String(n).padStart(2, '0'); }
 
 // ── Process entries ───────────────────────────────────────
 function processEntries(raw) {
+  if (!Array.isArray(raw)) return {};
   const out = {};
   for (const e of raw) {
     const teamField = (e.Team || '').trim();
