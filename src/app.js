@@ -113,7 +113,7 @@ async function updateGitHubConfig(config, pat) {
 const IS_TEST = new URLSearchParams(window.location.search).has('test');
 
 async function fetchData() {
-  const file = IS_TEST ? './test-results.json' : './results.json';
+  const file = IS_TEST ? './data/test-results.json' : './results.json';
   const r = await fetch(`${file}?t=${Date.now()}`, {
     signal: AbortSignal.timeout(10000)
   });
