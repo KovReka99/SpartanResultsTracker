@@ -7,7 +7,12 @@
         "Id": 101, "Bib": 101, "N": "Kővári Ádám", "C": "STG", "Sex": "M", "Status": 1,
         "Team": "STG-Budapest A", "Club": "Budapest",
         "Result": "4:02:15", "RLaps": 1, "ResultReal": "",
-        "Splits": [{"T":"0:41:20"},{"T":"1:22:10"},{"T":"2:03:45"},{"T":"2:45:00"},{"T":"3:20:15"},{"T":"3:48:30"}],
+        "Splits": [
+          {"T":"0:41:20","DT":"08:41:20"},{"T":"1:22:10","DT":"09:22:10"},
+          {"T":"2:03:45","DT":"10:03:45"},{"T":"2:45:00","DT":"10:45:00"},
+          {"T":"3:20:15","DT":"11:20:15"},{"T":"3:48:30","DT":"11:48:30"},
+          {"T":"4:02:15","DT":"12:02:15"}
+        ],
         "R1":null,"R2":null,"R3":null,"R4":null,"Pen":null,"PenN":null,"PenT":null,"Laps":null,
         "DA":"","DC":"","DS":"","OrA":1,"OrPr":1,"OrC":1,"OrS":1,"State":"HUN","Born":1990
       },
@@ -15,7 +20,12 @@
         "Id": 102, "Bib": 102, "N": "Fekete Tibor", "C": "STG", "Sex": "M", "Status": 1,
         "Team": "STG-Budapest A", "Club": "Budapest",
         "Result": "4:18:40", "RLaps": 1, "ResultReal": "",
-        "Splits": [{"T":"0:43:10"},{"T":"1:26:30"},{"T":"2:10:05"},{"T":"2:55:20"},{"T":"3:33:40"},{"T":"4:01:15"}],
+        "Splits": [
+          {"T":"0:43:10","DT":"08:53:10"},{"T":"1:26:30","DT":"09:36:30"},
+          {"T":"2:10:05","DT":"10:20:05"},{"T":"2:55:20","DT":"11:05:20"},
+          {"T":"3:33:40","DT":"11:43:40"},{"T":"4:01:15","DT":"12:11:15"},
+          {"T":"4:08:40","DT":"12:18:40"}
+        ],
         "R1":null,"R2":null,"R3":null,"R4":null,"Pen":null,"PenN":null,"PenT":null,"Laps":null,
         "DA":"","DC":"","DS":"","OrA":2,"OrPr":2,"OrC":2,"OrS":2,"State":"HUN","Born":1988
       },
@@ -23,7 +33,12 @@
         "Id": 103, "Bib": 103, "N": "Varga Ildikó", "C": "STG", "Sex": "F", "Status": 1,
         "Team": "STG-Budapest A", "Club": "Budapest",
         "Result": "4:35:22", "RLaps": 1, "ResultReal": "",
-        "Splits": [{"T":"0:46:00"},{"T":"1:31:45"},{"T":"2:18:30"},{"T":"3:05:10"},{"T":"3:45:00"},{"T":"4:12:40"}],
+        "Splits": [
+          {"T":"0:46:00","DT":"08:46:00"},{"T":"1:31:45","DT":"09:31:45"},
+          {"T":"2:18:30","DT":"10:18:30"},{"T":"3:05:10","DT":"11:05:10"},
+          {"T":"3:45:00","DT":"11:45:00"},{"T":"4:12:40","DT":"12:12:40"},
+          {"T":"4:35:22","DT":"12:35:22"}
+        ],
         "R1":null,"R2":null,"R3":null,"R4":null,"Pen":null,"PenN":null,"PenT":null,"Laps":null,
         "DA":"","DC":"","DS":"","OrA":3,"OrPr":3,"OrC":1,"OrS":1,"State":"HUN","Born":1993
       },
@@ -31,7 +46,12 @@
         "Id": 104, "Bib": 104, "N": "Simon Miklós", "C": "STG", "Sex": "M", "Status": 1,
         "Team": "STG-Budapest A", "Club": "Budapest",
         "Result": "4:48:10", "RLaps": 1, "ResultReal": "",
-        "Splits": [{"T":"0:48:50"},{"T":"1:37:20"},{"T":"2:25:00"},{"T":"3:12:45"},{"T":"3:55:10"},{"T":"4:25:30"}],
+        "Splits": [
+          {"T":"0:48:50","DT":"08:48:50"},{"T":"1:37:20","DT":"09:37:20"},
+          {"T":"2:25:00","DT":"10:25:00"},{"T":"3:12:45","DT":"11:12:45"},
+          {"T":"3:55:10","DT":"11:55:10"},{"T":"4:25:30","DT":"12:25:30"},
+          {"T":"4:48:10","DT":"12:48:10"}
+        ],
         "R1":null,"R2":null,"R3":null,"R4":null,"Pen":null,"PenN":null,"PenT":null,"Laps":null,
         "DA":"","DC":"","DS":"","OrA":5,"OrPr":5,"OrC":5,"OrS":5,"State":"HUN","Born":1985
       },
@@ -39,7 +59,11 @@
         "Id": 105, "Bib": 105, "N": "Rajkai Péter", "C": "STG", "Sex": "M", "Status": 0,
         "Team": "STG-Budapest A", "Club": "Budapest",
         "Result": "", "RLaps": 0, "ResultReal": "",
-        "Splits": [{"T":"0:50:30"},{"T":"1:42:10"},{"T":"2:33:00"},{"T":"3:22:15"},{"T":"4:05:40"},{"T":"4:38:20"}],
+        "Splits": [
+          {"T":"0:50:30","DT":"08:50:30"},{"T":"1:42:10","DT":"09:42:10"},
+          {"T":"2:33:00","DT":"10:33:00"},{"T":"3:22:15","DT":"11:22:15"},
+          {"T":"4:05:40","DT":"12:05:40"},{"T":"4:38:20","DT":"12:38:20"}
+        ],
         "R1":null,"R2":null,"R3":null,"R4":null,"Pen":null,"PenN":null,"PenT":null,"Laps":null,
         "DA":"","DC":"","DS":"","OrA":null,"OrPr":null,"OrC":null,"OrS":null,"State":"HUN","Born":1991
       },
@@ -48,7 +72,12 @@
         "Id": 201, "Bib": 201, "N": "Nagy Péter", "C": "STG", "Sex": "M", "Status": 1,
         "Team": "STG-Dunakeszi 4+", "Club": "Dunakeszi",
         "Result": "4:25:10", "RLaps": 1, "ResultReal": "",
-        "Splits": [{"T":"0:44:30"},{"T":"1:28:00"},{"T":"2:12:40"},{"T":"2:58:10"},{"T":"3:38:20"},{"T":"4:05:00"}],
+        "Splits": [
+          {"T":"0:44:30","DT":"08:54:30"},{"T":"1:28:00","DT":"09:38:00"},
+          {"T":"2:12:40","DT":"10:22:40"},{"T":"2:58:10","DT":"11:08:10"},
+          {"T":"3:38:20","DT":"11:48:20"},{"T":"4:05:00","DT":"12:15:00"},
+          {"T":"4:15:10","DT":"12:25:10"}
+        ],
         "R1":null,"R2":null,"R3":null,"R4":null,"Pen":null,"PenN":null,"PenT":null,"Laps":null,
         "DA":"","DC":"","DS":"","OrA":4,"OrPr":4,"OrC":4,"OrS":4,"State":"HUN","Born":1987
       },
@@ -56,7 +85,12 @@
         "Id": 202, "Bib": 202, "N": "Kiss Anna", "C": "STG", "Sex": "F", "Status": 1,
         "Team": "STG-Dunakeszi 4+", "Club": "Dunakeszi",
         "Result": "4:52:30", "RLaps": 1, "ResultReal": "",
-        "Splits": [{"T":"0:49:20"},{"T":"1:39:10"},{"T":"2:28:40"},{"T":"3:18:00"},{"T":"4:01:15"},{"T":"4:32:45"}],
+        "Splits": [
+          {"T":"0:49:20","DT":"08:49:20"},{"T":"1:39:10","DT":"09:39:10"},
+          {"T":"2:28:40","DT":"10:28:40"},{"T":"3:18:00","DT":"11:18:00"},
+          {"T":"4:01:15","DT":"12:01:15"},{"T":"4:32:45","DT":"12:32:45"},
+          {"T":"4:52:30","DT":"12:52:30"}
+        ],
         "R1":null,"R2":null,"R3":null,"R4":null,"Pen":null,"PenN":null,"PenT":null,"Laps":null,
         "DA":"","DC":"","DS":"","OrA":6,"OrPr":6,"OrC":2,"OrS":2,"State":"HUN","Born":1995
       },
@@ -64,7 +98,11 @@
         "Id": 203, "Bib": 203, "N": "Tóth Gábor", "C": "STG", "Sex": "M", "Status": 0,
         "Team": "STG-Dunakeszi 4+", "Club": "Dunakeszi",
         "Result": "", "RLaps": 0, "ResultReal": "",
-        "Splits": [{"T":"0:46:10"},{"T":"1:33:00"},{"T":"2:20:30"},{"T":"3:08:45"},{"T":"3:52:20"},{"T":"4:28:15"}],
+        "Splits": [
+          {"T":"0:46:10","DT":"08:46:10"},{"T":"1:33:00","DT":"09:33:00"},
+          {"T":"2:20:30","DT":"10:20:30"},{"T":"3:08:45","DT":"11:08:45"},
+          {"T":"3:52:20","DT":"11:52:20"},{"T":"4:28:15","DT":"12:28:15"}
+        ],
         "R1":null,"R2":null,"R3":null,"R4":null,"Pen":null,"PenN":null,"PenT":null,"Laps":null,
         "DA":"","DC":"","DS":"","OrA":null,"OrPr":null,"OrC":null,"OrS":null,"State":"HUN","Born":1989
       },
@@ -72,7 +110,10 @@
         "Id": 204, "Bib": 204, "N": "Horváth Dávid", "C": "STG", "Sex": "M", "Status": 0,
         "Team": "STG-Dunakeszi 4+", "Club": "Dunakeszi",
         "Result": "", "RLaps": 0, "ResultReal": "",
-        "Splits": [{"T":"0:51:40"},{"T":"1:45:10"},{"T":"2:38:55"},{"T":"3:28:00"}],
+        "Splits": [
+          {"T":"0:51:40","DT":"08:51:40"},{"T":"1:45:10","DT":"09:45:10"},
+          {"T":"2:38:55","DT":"10:38:55"},{"T":"3:28:00","DT":"11:28:00"}
+        ],
         "R1":null,"R2":null,"R3":null,"R4":null,"Pen":null,"PenN":null,"PenT":null,"Laps":null,
         "DA":"","DC":"","DS":"","OrA":null,"OrPr":null,"OrC":null,"OrS":null,"State":"HUN","Born":1992
       },
@@ -80,7 +121,10 @@
         "Id": 205, "Bib": 205, "N": "Szabó Éva", "C": "STG", "Sex": "F", "Status": 0,
         "Team": "STG-Dunakeszi 4+", "Club": "Dunakeszi",
         "Result": "", "RLaps": 0, "ResultReal": "",
-        "Splits": [{"T":"0:53:10"},{"T":"1:50:30"},{"T":"2:46:05"}],
+        "Splits": [
+          {"T":"0:53:10","DT":"08:53:10"},{"T":"1:50:30","DT":"09:50:30"},
+          {"T":"2:46:05","DT":"10:46:05"}
+        ],
         "R1":null,"R2":null,"R3":null,"R4":null,"Pen":null,"PenN":null,"PenT":null,"Laps":null,
         "DA":"","DC":"","DS":"","OrA":null,"OrPr":null,"OrC":null,"OrS":null,"State":"HUN","Born":1997
       },
@@ -88,7 +132,7 @@
         "Id": 206, "Bib": 206, "N": "Molnár Balázs", "C": "STG", "Sex": "M", "Status": 0,
         "Team": "STG-Dunakeszi 4+", "Club": "Dunakeszi",
         "Result": "", "RLaps": 0, "ResultReal": "",
-        "Splits": [{"T":"0:58:40"}],
+        "Splits": [{"T":"0:58:40","DT":"08:58:40"}],
         "R1":null,"R2":null,"R3":null,"R4":null,"Pen":null,"PenN":null,"PenT":null,"Laps":null,
         "DA":"","DC":"","DS":"","OrA":null,"OrPr":null,"OrC":null,"OrS":null,"State":"HUN","Born":1983
       },
@@ -97,7 +141,12 @@
         "Id": 301, "Bib": 301, "N": "Vida Zsolt", "C": "STG", "Sex": "M", "Status": 1,
         "Team": "STG-Pécs", "Club": "Pécs",
         "Result": "4:38:55", "RLaps": 1, "ResultReal": "",
-        "Splits": [{"T":"0:47:20"},{"T":"1:35:10"},{"T":"2:22:40"},{"T":"3:10:00"},{"T":"3:52:30"},{"T":"4:18:10"}],
+        "Splits": [
+          {"T":"0:47:20","DT":"08:47:20"},{"T":"1:35:10","DT":"09:35:10"},
+          {"T":"2:22:40","DT":"10:22:40"},{"T":"3:10:00","DT":"11:10:00"},
+          {"T":"3:52:30","DT":"11:52:30"},{"T":"4:18:10","DT":"12:18:10"},
+          {"T":"4:38:55","DT":"12:38:55"}
+        ],
         "R1":null,"R2":null,"R3":null,"R4":null,"Pen":null,"PenN":null,"PenT":null,"Laps":null,
         "DA":"","DC":"","DS":"","OrA":7,"OrPr":7,"OrC":7,"OrS":7,"State":"HUN","Born":1986
       },
@@ -105,7 +154,12 @@
         "Id": 302, "Bib": 302, "N": "Bodnár Csaba", "C": "STG", "Sex": "M", "Status": 1,
         "Team": "STG-Pécs", "Club": "Pécs",
         "Result": "4:55:20", "RLaps": 1, "ResultReal": "",
-        "Splits": [{"T":"0:49:00"},{"T":"1:38:30"},{"T":"2:28:10"},{"T":"3:18:40"},{"T":"4:03:50"},{"T":"4:34:20"}],
+        "Splits": [
+          {"T":"0:49:00","DT":"08:49:00"},{"T":"1:38:30","DT":"09:38:30"},
+          {"T":"2:28:10","DT":"10:28:10"},{"T":"3:18:40","DT":"11:18:40"},
+          {"T":"4:03:50","DT":"12:03:50"},{"T":"4:34:20","DT":"12:34:20"},
+          {"T":"4:55:20","DT":"12:55:20"}
+        ],
         "R1":null,"R2":null,"R3":null,"R4":null,"Pen":null,"PenN":null,"PenT":null,"Laps":null,
         "DA":"","DC":"","DS":"","OrA":8,"OrPr":8,"OrC":8,"OrS":8,"State":"HUN","Born":1988
       },
@@ -113,7 +167,12 @@
         "Id": 303, "Bib": 303, "N": "Lengyel Réka", "C": "STG", "Sex": "F", "Status": 1,
         "Team": "STG-Pécs", "Club": "Pécs",
         "Result": "5:10:45", "RLaps": 1, "ResultReal": "",
-        "Splits": [{"T":"0:52:30"},{"T":"1:45:00"},{"T":"2:37:20"},{"T":"3:30:10"},{"T":"4:18:00"},{"T":"4:50:30"}],
+        "Splits": [
+          {"T":"0:52:30","DT":"08:52:30"},{"T":"1:45:00","DT":"09:45:00"},
+          {"T":"2:37:20","DT":"10:37:20"},{"T":"3:30:10","DT":"11:30:10"},
+          {"T":"4:18:00","DT":"12:18:00"},{"T":"4:50:30","DT":"12:50:30"},
+          {"T":"5:10:45","DT":"13:10:45"}
+        ],
         "R1":null,"R2":null,"R3":null,"R4":null,"Pen":null,"PenN":null,"PenT":null,"Laps":null,
         "DA":"","DC":"","DS":"","OrA":9,"OrPr":9,"OrC":3,"OrS":3,"State":"HUN","Born":1994
       },
@@ -121,7 +180,11 @@
         "Id": 304, "Bib": 304, "N": "Papp András", "C": "STG", "Sex": "M", "Status": 0,
         "Team": "STG-Pécs", "Club": "Pécs",
         "Result": "", "RLaps": 0, "ResultReal": "",
-        "Splits": [{"T":"0:50:10"},{"T":"1:41:30"},{"T":"2:34:20"},{"T":"3:24:50"},{"T":"4:10:30"}],
+        "Splits": [
+          {"T":"0:50:10","DT":"08:50:10"},{"T":"1:41:30","DT":"09:41:30"},
+          {"T":"2:34:20","DT":"10:34:20"},{"T":"3:24:50","DT":"11:24:50"},
+          {"T":"4:10:30","DT":"12:10:30"}
+        ],
         "R1":null,"R2":null,"R3":null,"R4":null,"Pen":null,"PenN":null,"PenT":null,"Laps":null,
         "DA":"","DC":"","DS":"","OrA":null,"OrPr":null,"OrC":null,"OrS":null,"State":"HUN","Born":1990
       },
@@ -129,7 +192,10 @@
         "Id": 305, "Bib": 305, "N": "Takács Nóra", "C": "STG", "Sex": "F", "Status": 0,
         "Team": "STG-Pécs", "Club": "Pécs",
         "Result": "", "RLaps": 0, "ResultReal": "",
-        "Splits": [{"T":"0:55:00"},{"T":"1:52:10"},{"T":"2:50:40"}],
+        "Splits": [
+          {"T":"0:55:00","DT":"08:55:00"},{"T":"1:52:10","DT":"09:52:10"},
+          {"T":"2:50:40","DT":"10:50:40"}
+        ],
         "R1":null,"R2":null,"R3":null,"R4":null,"Pen":null,"PenN":null,"PenT":null,"Laps":null,
         "DA":"","DC":"","DS":"","OrA":null,"OrPr":null,"OrC":null,"OrS":null,"State":"HUN","Born":1996
       },
@@ -138,7 +204,12 @@
         "Id": 401, "Bib": 401, "N": "Szűcs Gábor", "C": "STG", "Sex": "M", "Status": 1,
         "Team": "STG-Debrecen", "Club": "Debrecen",
         "Result": "4:10:33", "RLaps": 1, "ResultReal": "",
-        "Splits": [{"T":"0:42:00"},{"T":"1:23:40"},{"T":"2:05:20"},{"T":"2:47:00"},{"T":"3:25:10"},{"T":"3:52:00"}],
+        "Splits": [
+          {"T":"0:42:00","DT":"08:42:00"},{"T":"1:23:40","DT":"09:23:40"},
+          {"T":"2:05:20","DT":"10:05:20"},{"T":"2:47:00","DT":"10:47:00"},
+          {"T":"3:25:10","DT":"11:25:10"},{"T":"3:52:00","DT":"11:52:00"},
+          {"T":"4:10:33","DT":"12:10:33"}
+        ],
         "R1":null,"R2":null,"R3":null,"R4":null,"Pen":null,"PenN":null,"PenT":null,"Laps":null,
         "DA":"","DC":"","DS":"","OrA":10,"OrPr":10,"OrC":10,"OrS":10,"State":"HUN","Born":1984
       },
@@ -146,7 +217,12 @@
         "Id": 402, "Bib": 402, "N": "Oláh Norbert", "C": "STG", "Sex": "M", "Status": 1,
         "Team": "STG-Debrecen", "Club": "Debrecen",
         "Result": "4:22:18", "RLaps": 1, "ResultReal": "",
-        "Splits": [{"T":"0:44:10"},{"T":"1:27:00"},{"T":"2:09:30"},{"T":"2:52:40"},{"T":"3:33:00"},{"T":"4:00:15"}],
+        "Splits": [
+          {"T":"0:44:10","DT":"08:44:10"},{"T":"1:27:00","DT":"09:27:00"},
+          {"T":"2:09:30","DT":"10:09:30"},{"T":"2:52:40","DT":"10:52:40"},
+          {"T":"3:33:00","DT":"11:33:00"},{"T":"4:00:15","DT":"12:00:15"},
+          {"T":"4:22:18","DT":"12:22:18"}
+        ],
         "R1":null,"R2":null,"R3":null,"R4":null,"Pen":null,"PenN":null,"PenT":null,"Laps":null,
         "DA":"","DC":"","DS":"","OrA":11,"OrPr":11,"OrC":11,"OrS":11,"State":"HUN","Born":1987
       },
@@ -154,7 +230,12 @@
         "Id": 403, "Bib": 403, "N": "Farkas Bence", "C": "STG", "Sex": "M", "Status": 1,
         "Team": "STG-Debrecen", "Club": "Debrecen",
         "Result": "4:40:05", "RLaps": 1, "ResultReal": "",
-        "Splits": [{"T":"0:47:30"},{"T":"1:34:20"},{"T":"2:21:10"},{"T":"3:08:00"},{"T":"3:50:40"},{"T":"4:17:20"}],
+        "Splits": [
+          {"T":"0:47:30","DT":"08:47:30"},{"T":"1:34:20","DT":"09:34:20"},
+          {"T":"2:21:10","DT":"10:21:10"},{"T":"3:08:00","DT":"11:08:00"},
+          {"T":"3:50:40","DT":"11:50:40"},{"T":"4:17:20","DT":"12:17:20"},
+          {"T":"4:40:05","DT":"12:40:05"}
+        ],
         "R1":null,"R2":null,"R3":null,"R4":null,"Pen":null,"PenN":null,"PenT":null,"Laps":null,
         "DA":"","DC":"","DS":"","OrA":12,"OrPr":12,"OrC":12,"OrS":12,"State":"HUN","Born":1991
       },
@@ -162,7 +243,12 @@
         "Id": 404, "Bib": 404, "N": "Kovács Tamás", "C": "STG", "Sex": "M", "Status": 1,
         "Team": "STG-Debrecen", "Club": "Debrecen",
         "Result": "4:58:42", "RLaps": 1, "ResultReal": "",
-        "Splits": [{"T":"0:50:20"},{"T":"1:41:00"},{"T":"2:31:40"},{"T":"3:22:10"},{"T":"4:08:30"},{"T":"4:38:00"}],
+        "Splits": [
+          {"T":"0:50:20","DT":"08:50:20"},{"T":"1:41:00","DT":"09:41:00"},
+          {"T":"2:31:40","DT":"10:31:40"},{"T":"3:22:10","DT":"11:22:10"},
+          {"T":"4:08:30","DT":"12:08:30"},{"T":"4:38:00","DT":"12:38:00"},
+          {"T":"4:58:42","DT":"12:58:42"}
+        ],
         "R1":null,"R2":null,"R3":null,"R4":null,"Pen":null,"PenN":null,"PenT":null,"Laps":null,
         "DA":"","DC":"","DS":"","OrA":13,"OrPr":13,"OrC":13,"OrS":13,"State":"HUN","Born":1986
       },
@@ -170,7 +256,9 @@
         "Id": 405, "Bib": 405, "N": "Bíró Zsuzsa", "C": "STG", "Sex": "F", "Status": 0,
         "Team": "STG-Debrecen", "Club": "Debrecen",
         "Result": "", "RLaps": 0, "ResultReal": "",
-        "Splits": [{"T":"0:58:10"},{"T":"1:58:30"}],
+        "Splits": [
+          {"T":"0:58:10","DT":"08:58:10"},{"T":"1:58:30","DT":"09:58:30"}
+        ],
         "R1":null,"R2":null,"R3":null,"R4":null,"Pen":null,"PenN":null,"PenT":null,"Laps":null,
         "DA":"","DC":"","DS":"","OrA":null,"OrPr":null,"OrC":null,"OrS":null,"State":"HUN","Born":1993
       },
@@ -179,7 +267,10 @@
         "Id": 501, "Bib": 501, "N": "Nemes Gábor", "C": "STG", "Sex": "M", "Status": 0,
         "Team": "STG-Győr", "Club": "Győr",
         "Result": "", "RLaps": 0, "ResultReal": "",
-        "Splits": [{"T":"0:54:20"},{"T":"1:52:00"},{"T":"2:48:30"}],
+        "Splits": [
+          {"T":"0:54:20","DT":"08:54:20"},{"T":"1:52:00","DT":"09:52:00"},
+          {"T":"2:48:30","DT":"10:48:30"}
+        ],
         "R1":null,"R2":null,"R3":null,"R4":null,"Pen":null,"PenN":null,"PenT":null,"Laps":null,
         "DA":"","DC":"","DS":"","OrA":null,"OrPr":null,"OrC":null,"OrS":null,"State":"HUN","Born":1989
       },
@@ -187,7 +278,9 @@
         "Id": 502, "Bib": 502, "N": "Pataki Kata", "C": "STG", "Sex": "F", "Status": 0,
         "Team": "STG-Győr", "Club": "Győr",
         "Result": "", "RLaps": 0, "ResultReal": "",
-        "Splits": [{"T":"0:57:40"},{"T":"1:58:00"}],
+        "Splits": [
+          {"T":"0:57:40","DT":"08:57:40"},{"T":"1:58:00","DT":"09:58:00"}
+        ],
         "R1":null,"R2":null,"R3":null,"R4":null,"Pen":null,"PenN":null,"PenT":null,"Laps":null,
         "DA":"","DC":"","DS":"","OrA":null,"OrPr":null,"OrC":null,"OrS":null,"State":"HUN","Born":1995
       },
@@ -195,7 +288,9 @@
         "Id": 503, "Bib": 503, "N": "Veres Péter", "C": "STG", "Sex": "M", "Status": 0,
         "Team": "STG-Győr", "Club": "Győr",
         "Result": "", "RLaps": 0, "ResultReal": "",
-        "Splits": [{"T":"1:01:20"},{"T":"2:04:10"}],
+        "Splits": [
+          {"T":"1:01:20","DT":"09:01:20"},{"T":"2:04:10","DT":"10:04:10"}
+        ],
         "R1":null,"R2":null,"R3":null,"R4":null,"Pen":null,"PenN":null,"PenT":null,"Laps":null,
         "DA":"","DC":"","DS":"","OrA":null,"OrPr":null,"OrC":null,"OrS":null,"State":"HUN","Born":1990
       },
@@ -203,7 +298,7 @@
         "Id": 504, "Bib": 504, "N": "Lakatos Dániel", "C": "STG", "Sex": "M", "Status": 0,
         "Team": "STG-Győr", "Club": "Győr",
         "Result": "", "RLaps": 0, "ResultReal": "",
-        "Splits": [{"T":"1:05:30"}],
+        "Splits": [{"T":"1:05:30","DT":"09:05:30"}],
         "R1":null,"R2":null,"R3":null,"R4":null,"Pen":null,"PenN":null,"PenT":null,"Laps":null,
         "DA":"","DC":"","DS":"","OrA":null,"OrPr":null,"OrC":null,"OrS":null,"State":"HUN","Born":1988
       },

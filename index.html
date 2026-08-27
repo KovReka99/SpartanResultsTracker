@@ -406,16 +406,18 @@ function fmtSecs(secs) {
 
 function pad(n) { return String(n).padStart(2, '0'); }
 
+function parseSplit(entry) {
+  if (!entry) return { T: null, DT: null };
+  if (typeof entry === 'string') return { T: entry, DT: null };
+  const T  = entry.T  != null ? String(entry.T)  : null;
+  const DT = entry.DT != null ? String(entry.DT) : null;
+  return { T, DT };
+}
+
 function parseLastSplit(splits) {
   if (!Array.isArray(splits) || splits.length === 0) return null;
-  const last = splits[splits.length - 1];
-  let timeStr = null;
-  if (typeof last === 'string') timeStr = last;
-  else if (last && typeof last === 'object') {
-    const raw = last.T ?? last.Time ?? last.time ?? last.Result ?? null;
-    if (raw != null) timeStr = String(raw);
-  }
-  return { cp: splits.length, timeStr };
+  const { T, DT } = parseSplit(splits[splits.length - 1]);
+  return { cp: splits.length, timeStr: T, dtStr: DT };
 }
 
 // ── Process entries ───────────────────────────────────────
@@ -433,16 +435,28 @@ function processEntries(raw) {
     if (!stgName && !/STG/i.test(cat)) continue;
 
     const team = stgName || clubField || teamField || 'STG Unknown';
-    const secs = parseSecs(e.Result);
-    const splitData = parseLastSplit(e.Splits);
+    const splitData  = parseLastSplit(e.Splits);
+    const secsResult = parseSecs(e.Result);
+
+    // Prefer last split's T (chip/race time) over Result (may be gun time).
+    // Only swap for finished athletes — for mid-race athletes the last split
+    // is an intermediate CP, not the finish.
+    const secsChip = (secsResult != null && splitData?.timeStr)
+      ? (parseSecs(splitData.timeStr) ?? secsResult)
+      : secsResult;
+    const timeStr = secsChip != null
+      ? (splitData?.timeStr && parseSecs(splitData.timeStr) != null
+          ? splitData.timeStr
+          : e.Result.trim())
+      : null;
 
     if (!out[team]) out[team] = [];
     out[team].push({
       name:      (e.N || '').trim(),
       sex:       e.Sex === 'F' ? 'F' : 'M',
       bib:       e.Bib,
-      time:      secs != null ? e.Result.trim() : null,
-      secs,
+      time:      timeStr,
+      secs:      secsChip,
       cp:        splitData ? splitData.cp : 0,
       splitTime: splitData ? splitData.timeStr : null,
       splits:    Array.isArray(e.Splits) ? e.Splits : [],
@@ -489,12 +503,8 @@ function calcScore(members) {
 // ── Checkpoint team score ─────────────────────────────────
 function getSecsAtCP(member, cpNum) {
   if (member.splits.length < cpNum) return null;
-  const entry = member.splits[cpNum - 1];
-  const raw = typeof entry === 'string' ? entry
-            : (entry && typeof entry === 'object')
-              ? (entry.T ?? entry.Time ?? entry.time ?? null)
-              : null;
-  return raw ? parseSecs(String(raw)) : null;
+  const { T } = parseSplit(member.splits[cpNum - 1]);
+  return T ? parseSecs(T) : null;
 }
 
 function calcCPTeamScore(members, cpNum) {
