@@ -14,24 +14,26 @@
       font-size: 15px;
     }
 
+    /* ── Header ── */
     header {
       background: #b01020;
       padding: 12px 16px;
     }
     header h1 { font-size: 19px; font-weight: 800; color: #fff; }
-    header p  { font-size: 13px; color: rgba(255,255,255,0.75); margin-top: 2px; }
+    header p  { font-size: 13px; color: rgba(255,255,255,0.7); margin-top: 2px; }
 
+    /* ── Status bar ── */
     .status-bar {
-      background: #1e1e1e;
+      background: #1c1c1c;
       padding: 7px 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       font-size: 12px;
-      color: #888;
-      border-bottom: 1px solid #2a2a2a;
+      color: #777;
+      border-bottom: 1px solid #252525;
     }
-    .refresh-btn {
+    .btn-sm {
       background: #b01020;
       color: #fff;
       border: none;
@@ -41,166 +43,123 @@
       cursor: pointer;
     }
 
-    /* URL input panel */
+    /* ── URL panel ── */
     #url-panel {
-      background: #1a1a1a;
-      border-bottom: 1px solid #2a2a2a;
+      background: #181818;
       padding: 14px 16px;
+      border-bottom: 1px solid #252525;
     }
-    #url-panel p { font-size: 13px; color: #888; margin-bottom: 8px; }
+    #url-panel p { font-size: 13px; color: #777; margin-bottom: 8px; }
+    #url-panel ol { font-size: 13px; color: #777; padding-left: 18px; line-height: 1.8; margin-bottom: 10px; }
+    #url-panel ol li b { color: #aaa; }
     .url-row { display: flex; gap: 8px; }
     .url-row input {
-      flex: 1;
-      padding: 8px 10px;
-      border-radius: 5px;
-      border: 1px solid #333;
-      background: #222;
-      color: #eee;
-      font-size: 13px;
+      flex: 1; padding: 9px 10px;
+      border-radius: 5px; border: 1px solid #333;
+      background: #222; color: #eee; font-size: 13px;
     }
     .url-row button {
-      background: #b01020;
-      color: #fff;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 5px;
-      font-size: 13px;
-      cursor: pointer;
-      white-space: nowrap;
+      background: #b01020; color: #fff;
+      border: none; padding: 9px 16px;
+      border-radius: 5px; font-size: 13px; cursor: pointer;
     }
-    .url-clear {
-      background: none;
-      border: 1px solid #444;
-      color: #888;
-      padding: 4px 10px;
-      border-radius: 4px;
-      font-size: 12px;
-      cursor: pointer;
-      margin-top: 8px;
+    .btn-link {
+      background: none; border: none;
+      color: #666; font-size: 12px;
+      cursor: pointer; margin-top: 8px;
+      text-decoration: underline;
     }
 
-    /* Sections */
+    /* ── Sections ── */
     .section { padding: 14px 16px; }
     .section-title {
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1.2px;
-      color: #666;
-      margin-bottom: 10px;
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1.2px;
+      color: #555; margin-bottom: 10px;
     }
 
-    /* My team card */
-    .my-team-card {
+    /* ── My team card ── */
+    .my-card {
       border: 2px solid #b01020;
-      border-radius: 8px;
-      overflow: hidden;
-      background: #1a1a1a;
-      margin-bottom: 4px;
+      border-radius: 8px; overflow: hidden;
     }
-    .my-team-card-header {
+    .my-card-head {
       background: #b01020;
       padding: 10px 14px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      display: flex; justify-content: space-between; align-items: center;
     }
-    .my-team-card-header .name { font-weight: 700; font-size: 16px; }
-    .my-team-card-header .score { font-weight: 700; font-size: 15px; }
+    .my-card-head .tname { font-weight: 800; font-size: 16px; }
+    .my-card-head .tscore { font-weight: 700; font-size: 15px; }
 
-    /* Member rows */
-    .member-row {
-      display: flex;
-      align-items: center;
-      padding: 9px 14px;
-      gap: 10px;
-      border-bottom: 1px solid #222;
+    /* ── Member rows ── */
+    .mrow {
+      display: flex; align-items: center;
+      padding: 9px 14px; gap: 10px;
+      border-bottom: 1px solid #1e1e1e;
+      background: #181818;
     }
-    .member-row:last-child { border-bottom: none; }
-    .gender-badge {
-      width: 22px; height: 22px;
-      border-radius: 50%;
+    .mrow:last-of-type { border-bottom: none; }
+    .gbadge {
+      width: 22px; height: 22px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      font-size: 10px; font-weight: 800;
-      flex-shrink: 0;
+      font-size: 10px; font-weight: 800; flex-shrink: 0;
     }
-    .gender-M { background: #1a5fa0; }
-    .gender-F { background: #9b1060; }
-    .member-name { flex: 1; font-size: 14px; }
-    .member-time {
-      font-family: 'Courier New', monospace;
-      font-size: 14px;
-      font-weight: 600;
-      color: #4caf50;
-    }
-    .member-time.dnf { color: #555; font-size: 12px; }
-    .star { color: gold; font-size: 13px; margin-left: 2px; }
+    .gbadge.M { background: #1a5fa0; }
+    .gbadge.F { background: #9b1060; }
+    .mname { flex: 1; font-size: 14px; }
+    .mtime { font-family: 'Courier New', monospace; font-size: 14px; font-weight: 600; }
+    .mtime.done { color: #4caf50; }
+    .mtime.wait { color: #444; font-size: 12px; }
+    .star { color: gold; font-size: 13px; margin-left: 3px; }
+    .score-note { font-size: 11px; color: #555; padding: 6px 14px 10px; background: #181818; }
 
-    /* Score colors */
-    .score-valid  { color: #4caf50; }
-    .score-wait   { color: #ff9800; }
-    .score-bad    { color: #f44336; }
+    /* ── Rankings ── */
+    .rcard { border-radius: 8px; overflow: hidden; }
+    .trow {
+      display: flex; align-items: center;
+      padding: 10px 14px; gap: 10px;
+      border-bottom: 1px solid #1e1e1e;
+      background: #181818; cursor: pointer;
+    }
+    .trow:last-of-type { border-bottom: none; }
+    .trow.mine { background: #1f0d0d; border-left: 3px solid #b01020; }
+    .trow:active { background: #222; }
+    .rpos { width: 26px; font-size: 14px; font-weight: 700; text-align: center; flex-shrink: 0; color: #444; }
+    .rpos.p1 { color: #ffd700; }
+    .rpos.p2 { color: #c0c0c0; }
+    .rpos.p3 { color: #cd7f32; }
+    .rname { flex: 1; font-size: 13px; }
+    .rscore { font-family: 'Courier New', monospace; font-size: 13px; font-weight: 700; }
+    .rprog  { font-size: 11px; color: #444; min-width: 30px; text-align: right; }
 
-    /* Rankings */
-    .rankings-card {
-      background: #1a1a1a;
-      border-radius: 8px;
-      overflow: hidden;
+    /* expandable detail */
+    .tdetail { display: none; background: #141414; border-bottom: 1px solid #1e1e1e; }
+    .tdetail.open { display: block; }
+    .drow {
+      display: flex; align-items: center;
+      padding: 6px 14px 6px 50px; gap: 8px;
+      font-size: 13px; color: #888;
+      border-bottom: 1px solid #1a1a1a;
     }
-    .team-row {
-      display: flex;
-      align-items: center;
-      padding: 10px 14px;
-      gap: 10px;
-      border-bottom: 1px solid #222;
-    }
-    .team-row:last-child { border-bottom: none; }
-    .team-row.is-mine { background: #1f0e0e; border-left: 3px solid #b01020; }
-    .rank-pos {
-      width: 26px;
-      font-size: 14px;
-      font-weight: 700;
-      text-align: center;
-      flex-shrink: 0;
-      color: #555;
-    }
-    .rank-1 { color: #ffd700; }
-    .rank-2 { color: #c0c0c0; }
-    .rank-3 { color: #cd7f32; }
-    .team-row-name { flex: 1; font-size: 13px; }
-    .team-row-score {
-      font-family: 'Courier New', monospace;
-      font-size: 13px;
-      font-weight: 700;
-    }
-    .team-row-progress { font-size: 11px; color: #555; min-width: 32px; text-align: right; }
+    .drow:last-child { border-bottom: none; }
+    .dtime { font-family: 'Courier New', monospace; margin-left: auto; }
+    .dtime.done { color: #4caf50; }
+    .dstar { color: gold; font-size: 11px; }
 
-    /* Loading / error */
-    .loading { text-align: center; padding: 30px; color: #555; font-size: 14px; }
-    .error-box {
-      background: #2a1212;
-      border: 1px solid #b01020;
-      border-radius: 6px;
-      padding: 12px;
-      color: #f88;
-      font-size: 13px;
-      margin-top: 8px;
-    }
+    /* ── Utility ── */
+    .c-green  { color: #4caf50; }
+    .c-orange { color: #ff9800; }
+    .c-red    { color: #f44336; }
+    .c-dim    { color: #444; }
     .info-box {
-      background: #1a1f2a;
-      border: 1px solid #334;
-      border-radius: 6px;
-      padding: 12px;
-      color: #99aacc;
-      font-size: 13px;
-      margin-top: 8px;
+      background: #181818; border: 1px solid #2a2a2a;
+      border-radius: 6px; padding: 16px;
+      color: #777; font-size: 13px; text-align: center;
     }
-
-    /* Score note */
-    .score-note {
-      font-size: 11px;
-      color: #666;
-      padding: 6px 14px 10px;
+    .err-box {
+      background: #2a1212; border: 1px solid #b01020;
+      border-radius: 6px; padding: 12px;
+      color: #f88; font-size: 13px;
     }
   </style>
 </head>
@@ -212,238 +171,293 @@
 </header>
 
 <div class="status-bar">
-  <span id="status-text">Starting up…</span>
-  <button class="refresh-btn" onclick="manualRefresh()">&#x21BB; Refresh</button>
+  <span id="status-text">Waiting for results URL…</span>
+  <button class="btn-sm" onclick="manualRefresh()">↻ Refresh</button>
 </div>
 
 <div id="url-panel">
-  <p>Paste the live results URL when the race starts:</p>
+  <p>How to get the results URL on race day:</p>
+  <ol>
+    <li>Open <b>live.onlinesystem.cz</b></li>
+    <li>Find <b>Bielsko-Biała Ultra</b> and tap it</li>
+    <li>Select the <b>STG / Ultra</b> category</li>
+    <li>Copy the URL and paste it below</li>
+  </ol>
   <div class="url-row">
-    <input id="results-url-input" type="url"
-      placeholder="https://results.onlinesystem.cz/ResultsOverall/Index/…" />
-    <button onclick="applyResultsUrl()">Load</button>
+    <input id="url-input" type="url"
+      placeholder="https://live.onlinesystem.cz/results?id=3579&idTrack=…" />
+    <button onclick="applyUrl()">Load</button>
   </div>
-  <div id="url-clear-wrap" style="display:none">
-    <button class="url-clear" onclick="clearResultsUrl()">&#x2715; Clear URL / change race</button>
+  <div id="clear-row" style="display:none">
+    <button class="btn-link" onclick="clearUrl()">✕ Change URL</button>
   </div>
 </div>
 
 <div class="section">
-  <div class="section-title">My Team</div>
-  <div id="my-team-section"><div class="loading">Loading start list…</div></div>
+  <div class="section-title">My Team — STG-Dunakeszi 4+</div>
+  <div id="my-team"><div class="info-box">Paste the results URL above to start tracking.</div></div>
 </div>
 
 <div class="section">
-  <div class="section-title">All STG Teams</div>
-  <div id="rankings-section"><div class="loading">Loading start list…</div></div>
+  <div class="section-title">All STG Teams &nbsp;<span id="team-count" style="font-weight:400;color:#555"></span></div>
+  <div id="rankings"></div>
 </div>
 
 <script>
-// ─── Config ───────────────────────────────────────────────
-const MY_TEAM   = 'STG-Dunakeszi 4+';
-const PAGES     = 9;
-const INTERVAL  = 60; // seconds between auto-refreshes
-const BASE_URL  = 'https://spartanrace.onlinesystem.cz/Events/StartList'
-                + '?eventId=982&title=bielsko---biala-spartan-ultra-2026-08-29&search=';
-const PROXIES   = [
-  url => `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`,
-  url => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
+// ── Config ────────────────────────────────────────────────
+const MY_TEAM = 'STG-Dunakeszi 4+';
+const INTERVAL = 60; // auto-refresh seconds
+const CORS_PROXIES = [
+  u => `https://api.allorigins.win/get?url=${encodeURIComponent(u)}`,
+  u => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(u)}`,
 ];
 
-// ─── State ────────────────────────────────────────────────
-let teams      = {};   // { teamName: [ {bib, name, gender} ] }
-let resultMap  = {};   // { bib: {time, secs, pos} }
-let resultsUrl = localStorage.getItem('spartan_results_url') || '';
-let ticker     = null;
-let countdown  = INTERVAL;
-let loadError  = null;
+// ── State ─────────────────────────────────────────────────
+let eventId  = '';
+let idTrack  = '';
+let teams    = {};   // { teamName: [ {name,sex,bib,time,secs} ] }
+let ticker   = null;
+let countdown = INTERVAL;
+let expanded  = new Set();
 
-// ─── Proxy fetch ─────────────────────────────────────────
-async function proxyFetch(url) {
-  let lastErr;
-  for (const makeProxy of PROXIES) {
+// ── Boot: restore saved URL ───────────────────────────────
+(function boot() {
+  const saved = localStorage.getItem('spartan_track_url') || '';
+  if (!saved) return;
+  document.getElementById('url-input').value = saved;
+  if (parseUrl(saved)) {
+    showClearBtn();
+    refresh();
+  }
+})();
+
+// ── URL handling ──────────────────────────────────────────
+function parseUrl(raw) {
+  try {
+    const u = new URL(raw.trim());
+    const id  = u.searchParams.get('id') || u.searchParams.get('eventId');
+    const trk = u.searchParams.get('idTrack');
+    if (!id) return false;
+    eventId = id;
+    idTrack = trk || '';
+    return true;
+  } catch { return false; }
+}
+
+function applyUrl() {
+  const val = document.getElementById('url-input').value.trim();
+  if (!val || !parseUrl(val)) {
+    setStatus('Paste a valid live.onlinesystem.cz URL');
+    return;
+  }
+  localStorage.setItem('spartan_track_url', val);
+  showClearBtn();
+  refresh();
+}
+
+function clearUrl() {
+  eventId = ''; idTrack = '';
+  teams = {}; expanded.clear();
+  localStorage.removeItem('spartan_track_url');
+  document.getElementById('url-input').value = '';
+  document.getElementById('clear-row').style.display = 'none';
+  if (ticker) { clearInterval(ticker); ticker = null; }
+  renderMyTeam();
+  renderRankings();
+  setStatus('Waiting for results URL…');
+}
+
+function showClearBtn() {
+  document.getElementById('clear-row').style.display = 'block';
+}
+
+// ── API ───────────────────────────────────────────────────
+function buildApiUrl() {
+  return `https://live.onlinesystem.cz/api/ResultsList/List/?`
+    + `searchText=&category=&eventId=${eventId}&idTrack=${idTrack}`
+    + `&exportType=5&take=5000&skip=0&page=1&pageSize=5000`
+    + `&sort[0][field]=OrA&sort[0][dir]=asc`;
+}
+
+async function fetchJson(url) {
+  // Try direct (works if the API sends CORS headers)
+  try {
+    const r = await fetch(url, { signal: AbortSignal.timeout(8000) });
+    if (r.ok) return normalize(await r.json());
+  } catch {}
+
+  // Proxy fallback
+  for (const mkProxy of CORS_PROXIES) {
     try {
-      const r = await fetch(makeProxy(url), { signal: AbortSignal.timeout(12000) });
+      const r = await fetch(mkProxy(url), { signal: AbortSignal.timeout(14000) });
       if (!r.ok) continue;
       const j = await r.json();
-      if (j && j.contents) return j.contents;
-      // codetabs returns plain text
-      if (typeof j === 'string') return j;
-    } catch (e) { lastErr = e; }
+      const raw = j.contents !== undefined ? JSON.parse(j.contents) : j;
+      return normalize(raw);
+    } catch {}
   }
-  throw lastErr || new Error('All proxies failed');
+  throw new Error('Could not reach the results API — check your internet connection');
 }
 
-// ─── Time helpers ─────────────────────────────────────────
+function normalize(raw) {
+  return Array.isArray(raw) ? raw : (raw.data || raw.results || raw.items || []);
+}
+
+// ── Time helpers ──────────────────────────────────────────
+const TIME_RE = /^\d{1,3}:\d{2}:\d{2}$/;
+
 function parseSecs(s) {
-  if (!s) return Infinity;
-  const t = s.trim().replace(/[^\d:]/g, '');
-  const p = t.split(':').map(Number);
-  if (p.length === 3) return p[0]*3600 + p[1]*60 + p[2];
-  if (p.length === 2) return p[0]*60  + p[1];
-  return Infinity;
+  if (!s || !TIME_RE.test(s.trim())) return null;
+  const [h, m, sec] = s.trim().split(':').map(Number);
+  return h * 3600 + m * 60 + sec;
 }
 
-function fmt(secs) {
-  if (!isFinite(secs)) return '—';
+function fmtSecs(secs) {
+  if (secs == null) return '—';
   const h = Math.floor(secs / 3600);
   const m = Math.floor((secs % 3600) / 60);
   const s = Math.floor(secs % 60);
-  return `${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  return `${h}:${pad(m)}:${pad(s)}`;
 }
 
-function isFemale(g) {
-  return /^[žzfw]/i.test((g||'').trim());
-}
+function pad(n) { return String(n).padStart(2, '0'); }
 
-// ─── Start list ───────────────────────────────────────────
-async function loadStartList() {
-  const htmlPages = await Promise.all(
-    Array.from({length: PAGES}, (_, i) =>
-      proxyFetch(BASE_URL + '&page=' + (i + 1))
-    )
-  );
-
+// ── Data processing ───────────────────────────────────────
+function processEntries(raw) {
   const out = {};
-  for (const html of htmlPages) {
-    const doc = new DOMParser().parseFromString(html, 'text/html');
-    for (const row of doc.querySelectorAll('table tbody tr')) {
-      const cells = [...row.querySelectorAll('td')];
-      if (cells.length < 7) continue;
-      const bib    = cells[0].textContent.trim();
-      const gender = cells[1].textContent.trim();
-      const name   = cells[2].textContent.trim();
-      const wave   = cells[5].textContent.trim();
-      const team   = cells[6].textContent.trim();
-      if (!team || !wave.toUpperCase().includes('STG')) continue;
-      if (!out[team]) out[team] = [];
-      out[team].push({ bib, name, gender: isFemale(gender) ? 'F' : 'M' });
-    }
+  for (const e of raw) {
+    // Team name: prefer Team field, then Club, then check category
+    const teamField = (e.Team || '').trim();
+    const clubField = (e.Club || '').trim();
+    const cat       = (e.C   || '').trim();
+
+    const stgName = /^STG/i.test(teamField) ? teamField
+                  : /^STG/i.test(clubField) ? clubField
+                  : null;
+    const stgCat  = /STG/i.test(cat);
+
+    if (!stgName && !stgCat) continue;
+
+    const team = stgName || clubField || teamField || 'STG Unknown';
+    const secs = parseSecs(e.Result);
+
+    if (!out[team]) out[team] = [];
+    out[team].push({
+      name: (e.N || '').trim(),
+      sex:  e.Sex === 'F' ? 'F' : 'M',
+      bib:  e.Bib,
+      time: secs != null ? e.Result.trim() : null,
+      secs,
+    });
+  }
+
+  // Sort each team: finishers first (fastest first), then non-finishers
+  for (const members of Object.values(out)) {
+    members.sort((a, b) => {
+      if (a.secs != null && b.secs != null) return a.secs - b.secs;
+      if (a.secs != null) return -1;
+      if (b.secs != null) return 1;
+      return 0;
+    });
   }
   return out;
 }
 
-// ─── Results ──────────────────────────────────────────────
-async function loadResults() {
-  if (!resultsUrl) return;
-  const html = await proxyFetch(resultsUrl);
-  const doc  = new DOMParser().parseFromString(html, 'text/html');
-  const out  = {};
-  const TIME_RE = /^\d+:\d{2}:\d{2}$/;
-
-  for (const row of doc.querySelectorAll('table tbody tr')) {
-    const cells = [...row.querySelectorAll('td')].map(c => c.textContent.trim());
-    if (cells.length < 6) continue;
-
-    // Find the time cell (HH:MM:SS pattern)
-    let timeIdx = -1;
-    for (let i = cells.length - 1; i >= 0; i--) {
-      if (TIME_RE.test(cells[i])) { timeIdx = i; break; }
-    }
-    if (timeIdx === -1) continue;
-
-    // Bib is usually the second cell (index 1) or first numeric-looking cell
-    const bib = cells.find((c, i) => i > 0 && /^\d{4,6}$/.test(c));
-    if (!bib) continue;
-
-    const secs = parseSecs(cells[timeIdx]);
-    if (isFinite(secs)) {
-      out[bib] = { time: cells[timeIdx], secs, pos: cells[0] };
-    }
-  }
-  return out;
-}
-
-// ─── Team score ───────────────────────────────────────────
+// ── Team score ────────────────────────────────────────────
 function calcScore(members) {
-  const finished = members
-    .map(m => ({ ...m, r: resultMap[m.bib] }))
-    .filter(m => m.r)
-    .sort((a, b) => a.r.secs - b.r.secs);
-
-  const females  = finished.filter(m => m.gender === 'F');
+  const finished = members.filter(m => m.secs != null);
+  const females  = finished.filter(m => m.sex === 'F');
   const total    = members.length;
-  const nDone    = finished.length;
 
-  if (nDone === 0 || !Object.keys(resultMap).length)
-    return { status: 'nodata',     score: null, scoring: [], finished, total };
-  if (nDone < 4)
-    return { status: 'waiting',    score: null, scoring: [], finished, total };
+  if (finished.length === 0)
+    return { status: 'nodata',    score: null, scoring: [], finished, total };
+  if (finished.length < 4)
+    return { status: 'waiting',   score: null, scoring: [], finished, total };
   if (females.length === 0)
-    return { status: 'no_female',  score: null, scoring: [], finished, total };
+    return { status: 'no_female', score: null, scoring: [], finished, total };
 
   const top4 = finished.slice(0, 4);
   let scoring;
-  if (top4.some(m => m.gender === 'F')) {
+  if (top4.some(m => m.sex === 'F')) {
     scoring = top4;
   } else {
-    // Swap slowest of top 4 for fastest female
+    // Swap slowest of top-4 for fastest female
     scoring = [...top4.slice(0, 3), females[0]]
-      .sort((a, b) => a.r.secs - b.r.secs);
+      .sort((a, b) => a.secs - b.secs);
   }
 
-  const avgSecs = Math.round(scoring.reduce((s, m) => s + m.r.secs, 0) / 4);
-  return { status: 'valid', score: avgSecs, scoring, finished, total };
+  const avg = Math.round(scoring.reduce((s, m) => s + m.secs, 0) / 4);
+  return { status: 'valid', score: avg, scoring, finished, total };
 }
 
-// ─── Render: my team ──────────────────────────────────────
+// ── Render: my team ───────────────────────────────────────
 function renderMyTeam() {
-  const el      = document.getElementById('my-team-section');
-  const members = teams[MY_TEAM];
+  const el = document.getElementById('my-team');
 
-  if (!members) {
-    el.innerHTML = '<div class="error-box">Team "' + MY_TEAM + '" not found in start list.</div>';
+  if (!eventId) {
+    el.innerHTML = '<div class="info-box">Paste the results URL above to start tracking.</div>';
+    return;
+  }
+
+  const members = teams[MY_TEAM];
+  if (!members || members.length === 0) {
+    el.innerHTML = '<div class="info-box">STG-Dunakeszi 4+ not in results yet —<br>waiting for the first team member to finish.</div>';
     return;
   }
 
   const { status, score, scoring, finished, total } = calcScore(members);
   const scoringBibs = new Set(scoring.map(m => m.bib));
 
-  const scoreHtml = {
-    valid:     `<span class="score-valid">${fmt(score)}</span>`,
-    waiting:   `<span class="score-wait">&#x23F3; ${finished.length}/${total} done</span>`,
-    no_female: `<span class="score-bad">&#x26A0; No female finisher</span>`,
-    nodata:    `<span class="score-wait">Waiting for results…</span>`,
+  const scoreLbl = {
+    valid:     `<span class="c-green">${fmtSecs(score)}</span>`,
+    waiting:   `<span class="c-orange">⏳ ${finished.length}/${total} done</span>`,
+    no_female: `<span class="c-red">⚠ No female finisher</span>`,
+    nodata:    `<span class="c-dim">Waiting…</span>`,
   }[status];
 
   const rows = members.map(m => {
-    const r       = resultMap[m.bib];
-    const timeHtml = r
-      ? `<span class="member-time">${r.time}</span>`
-      : `<span class="member-time dnf">not yet</span>`;
-    const starHtml = scoringBibs.has(m.bib) ? '<span class="star">&#9733;</span>' : '';
-    return `<div class="member-row">
-      <div class="gender-badge gender-${m.gender}">${m.gender}</div>
-      <div class="member-name">${esc(m.name)}</div>
-      ${timeHtml}${starHtml}
+    const t = m.time
+      ? `<span class="mtime done">${m.time}</span>`
+      : `<span class="mtime wait">not finished</span>`;
+    const s = scoringBibs.has(m.bib) ? '<span class="star">★</span>' : '';
+    return `<div class="mrow">
+      <div class="gbadge ${m.sex}">${m.sex}</div>
+      <div class="mname">${esc(m.name)}</div>
+      ${t}${s}
     </div>`;
   }).join('');
 
   const note = status === 'valid'
-    ? '<div class="score-note">&#9733; = counted in team score (avg of best 4, ≥1 female)</div>'
+    ? `<div class="score-note">★ counted in score &nbsp;·&nbsp; avg of best 4, ≥ 1 female</div>`
     : '';
 
   el.innerHTML = `
-    <div class="my-team-card">
-      <div class="my-team-card-header">
-        <span class="name">${esc(MY_TEAM)}</span>
-        <span class="score">${scoreHtml}</span>
+    <div class="my-card">
+      <div class="my-card-head">
+        <span class="tname">${esc(MY_TEAM)}</span>
+        <span class="tscore">${scoreLbl}</span>
       </div>
-      ${rows}
-      ${note}
+      ${rows}${note}
     </div>`;
 }
 
-// ─── Render: rankings ─────────────────────────────────────
+// ── Render: rankings ──────────────────────────────────────
 function renderRankings() {
-  const el = document.getElementById('rankings-section');
+  const el = document.getElementById('rankings');
+  const tc = document.getElementById('team-count');
 
-  const rows = Object.entries(teams)
+  if (!eventId || Object.keys(teams).length === 0) {
+    el.innerHTML = '';
+    tc.textContent = '';
+    return;
+  }
+
+  const scored = Object.entries(teams)
     .map(([name, members]) => ({ name, ...calcScore(members) }))
     .sort((a, b) => {
-      if (a.status === 'valid'  && b.status === 'valid')  return a.score - b.score;
-      if (a.status === 'valid')  return -1;
-      if (b.status === 'valid')  return  1;
+      if (a.status === 'valid' && b.status === 'valid') return a.score - b.score;
+      if (a.status === 'valid')   return -1;
+      if (b.status === 'valid')   return  1;
       if (a.status === 'waiting' && b.status === 'waiting')
         return b.finished.length - a.finished.length;
       if (a.status === 'waiting') return -1;
@@ -451,148 +465,111 @@ function renderRankings() {
       return a.name.localeCompare(b.name);
     });
 
-  let rank = 0;
-  const html = rows.map(t => {
-    const isMe   = t.name === MY_TEAM;
-    if (t.status === 'valid') rank++;
-    const posNum = t.status === 'valid' ? rank : '—';
-    const posClass = rank <= 3 && t.status === 'valid' ? `rank-${rank}` : '';
+  tc.textContent = `(${scored.length} teams)`;
 
-    const scoreHtml = {
-      valid:     `<span class="team-row-score score-valid">${fmt(t.score)}</span>`,
-      waiting:   `<span class="team-row-score score-wait">—</span>`,
-      no_female: `<span class="team-row-score score-bad">&#x26A0;</span>`,
-      nodata:    `<span class="team-row-score" style="color:#444">—</span>`,
-    }[t.status];
+  let validRank = 0;
+  const html = scored.map((t, i) => {
+    const isMe = t.name === MY_TEAM;
+    if (t.status === 'valid') validRank++;
 
-    const progress = `<span class="team-row-progress">${t.finished.length}/${t.total}</span>`;
+    const posNum = t.status === 'valid' ? validRank : '—';
+    const posClass = validRank <= 3 && t.status === 'valid' ? `p${validRank}` : '';
 
-    return `<div class="team-row${isMe ? ' is-mine' : ''}">
-      <div class="rank-pos ${posClass}">${posNum}</div>
-      <div class="team-row-name">${isMe ? '&#9733; ' : ''}${esc(t.name)}</div>
-      ${scoreHtml}
-      ${progress}
-    </div>`;
+    const scoreTxt = t.status === 'valid'
+      ? `<span class="rscore c-green">${fmtSecs(t.score)}</span>`
+      : t.status === 'no_female'
+      ? `<span class="rscore c-red">⚠</span>`
+      : `<span class="rscore c-dim">—</span>`;
+
+    const prog = `<span class="rprog">${t.finished.length}/${t.total}</span>`;
+    const detailId = `d${i}`;
+    const isOpen = expanded.has(detailId);
+
+    // Detail: show all finished members
+    const scoringBibs = new Set(t.scoring.map(m => m.bib));
+    const detailRows = t.finished.map(m => {
+      const isStar = scoringBibs.has(m.bib);
+      return `<div class="drow">
+        <div class="gbadge ${m.sex}" style="width:16px;height:16px;font-size:8px">${m.sex}</div>
+        ${esc(m.name)}
+        <span class="dtime done">${m.time}</span>
+        ${isStar ? '<span class="dstar">★</span>' : ''}
+      </div>`;
+    }).join('');
+
+    return `
+      <div class="trow${isMe ? ' mine' : ''}" onclick="toggleDetail('${detailId}')">
+        <div class="rpos ${posClass}">${posNum}</div>
+        <div class="rname">${isMe ? '★ ' : ''}${esc(t.name)}</div>
+        ${scoreTxt}${prog}
+      </div>
+      <div id="${detailId}" class="tdetail${isOpen ? ' open' : ''}">${detailRows}</div>`;
   }).join('');
 
-  el.innerHTML = `<div class="rankings-card">${html}</div>`;
+  el.innerHTML = `<div class="rcard">${html}</div>`;
 }
 
-// ─── Status bar ───────────────────────────────────────────
+function toggleDetail(id) {
+  if (expanded.has(id)) expanded.delete(id);
+  else expanded.add(id);
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle('open');
+}
+
+// ── Status ────────────────────────────────────────────────
+function setStatus(msg) {
+  document.getElementById('status-text').textContent = msg;
+}
+
 function updateStatus() {
-  const el  = document.getElementById('status-text');
-  const now = new Date().toLocaleTimeString();
-  const nResults = Object.keys(resultMap).length;
-
-  if (loadError) {
-    el.textContent = `Error: ${loadError}`;
-    return;
-  }
-  if (!Object.keys(teams).length) {
-    el.textContent = 'Loading start list…';
-    return;
-  }
-  if (!resultsUrl) {
-    el.textContent = 'Start list loaded · Paste results URL above';
-    return;
-  }
-  el.textContent = nResults
-    ? `${nResults} results · ${now} · refresh in ${countdown}s`
-    : `No results yet · ${now} · refresh in ${countdown}s`;
+  if (!eventId) { setStatus('Waiting for results URL…'); return; }
+  const n = Object.values(teams).reduce((s, m) => s + m.filter(x => x.secs).length, 0);
+  const time = new Date().toLocaleTimeString();
+  setStatus(`${n} finishers · ${time} · refresh in ${countdown}s`);
 }
 
-// ─── URL handling ─────────────────────────────────────────
-function applyResultsUrl() {
-  const val = document.getElementById('results-url-input').value.trim();
-  if (!val) return;
-  resultsUrl = val;
-  localStorage.setItem('spartan_results_url', val);
-  document.getElementById('url-clear-wrap').style.display = 'block';
-  manualRefresh();
-}
-
-function clearResultsUrl() {
-  resultsUrl = '';
-  resultMap  = {};
-  localStorage.removeItem('spartan_results_url');
-  document.getElementById('results-url-input').value = '';
-  document.getElementById('url-clear-wrap').style.display = 'none';
-  renderMyTeam();
-  renderRankings();
-  updateStatus();
-}
-
-function esc(s) {
-  return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
-
-// ─── Refresh loop ─────────────────────────────────────────
-async function refreshResults() {
-  if (!resultsUrl) return;
+// ── Refresh ───────────────────────────────────────────────
+async function refresh() {
+  if (!eventId) return;
+  setStatus('Loading…');
   try {
-    const r = await loadResults();
-    if (r) resultMap = r;
+    const raw = await fetchJson(buildApiUrl());
+    teams = processEntries(raw);
+    renderMyTeam();
+    renderRankings();
+    countdown = INTERVAL;
+    updateStatus();
+    startTicker();
   } catch (e) {
-    console.warn('Results fetch failed:', e.message);
+    setStatus(`Error: ${e.message}`);
+    document.getElementById('my-team').innerHTML =
+      `<div class="err-box">${esc(e.message)}</div>`;
   }
+}
+
+async function manualRefresh() {
+  if (!eventId) return;
+  if (ticker) { clearInterval(ticker); ticker = null; }
+  await refresh();
 }
 
 function startTicker() {
   if (ticker) clearInterval(ticker);
   countdown = INTERVAL;
-  ticker = setInterval(async () => {
+  ticker = setInterval(() => {
     countdown--;
-    if (countdown <= 0) {
-      countdown = INTERVAL;
-      await refreshResults();
-      renderMyTeam();
-      renderRankings();
-    }
-    updateStatus();
+    if (countdown <= 0) refresh();
+    else updateStatus();
   }, 1000);
 }
 
-async function manualRefresh() {
-  await refreshResults();
-  renderMyTeam();
-  renderRankings();
-  countdown = INTERVAL;
-  updateStatus();
+// ── Utils ─────────────────────────────────────────────────
+function esc(s) {
+  return (s || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
 }
-
-// ─── Boot ─────────────────────────────────────────────────
-async function init() {
-  // Restore saved URL
-  if (resultsUrl) {
-    document.getElementById('results-url-input').value = resultsUrl;
-    document.getElementById('url-clear-wrap').style.display = 'block';
-  }
-
-  updateStatus();
-
-  try {
-    teams = await loadStartList();
-  } catch (e) {
-    loadError = e.message;
-    document.getElementById('my-team-section').innerHTML =
-      `<div class="error-box">Could not load start list: ${esc(e.message)}<br>
-       Check your internet connection and try refreshing.</div>`;
-    document.getElementById('rankings-section').innerHTML = '';
-    updateStatus();
-    return;
-  }
-
-  if (resultsUrl) {
-    await refreshResults();
-  }
-
-  renderMyTeam();
-  renderRankings();
-  updateStatus();
-  startTicker();
-}
-
-init();
 </script>
 </body>
 </html>

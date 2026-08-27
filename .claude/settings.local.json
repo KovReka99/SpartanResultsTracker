@@ -2,7 +2,11 @@
   "permissions": {
     "allow": [
       "WebFetch(domain:results.onlinesystem.cz)",
-      "WebFetch(domain:spartanrace.onlinesystem.cz)"
+      "WebFetch(domain:spartanrace.onlinesystem.cz)",
+      "WebFetch(domain:api.allorigins.win)",
+      "WebFetch(domain:api.codetabs.com)",
+      "WebFetch(domain:live.onlinesystem.cz)",
+      "WebFetch(domain:api.onlinesystem.cz)"
     ]
   }
 }
