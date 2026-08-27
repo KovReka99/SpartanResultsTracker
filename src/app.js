@@ -135,12 +135,15 @@ async function fetchData() {
 }
 
 // ── Time helpers ──────────────────────────────────────────
-const TIME_RE = /^\d{1,3}:\d{2}:\d{2}$/;
-
 function parseSecs(s) {
-  if (!s || !TIME_RE.test(s.trim())) return null;
-  const [h, m, sec] = s.trim().split(':').map(Number);
-  return h * 3600 + m * 60 + sec;
+  if (!s) return null;
+  const t = s.trim();
+  let m;
+  if ((m = t.match(/^(\d{1,3}):(\d{2}):(\d{2})$/)))
+    return Number(m[1])*3600 + Number(m[2])*60 + Number(m[3]);
+  if ((m = t.match(/^(\d{1,3}):(\d{2})$/)))
+    return Number(m[1])*60 + Number(m[2]);
+  return null;
 }
 
 function fmtSecs(secs) {
