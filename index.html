@@ -36,8 +36,6 @@
       transition: opacity 0.2s;
     }
     .btn-sm:disabled { opacity: 0.5; cursor: default; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .btn-sm.spinning { display: inline-block; animation: spin 0.7s linear infinite; }
 
     .loading-bar { height: 3px; background: #1c1c1c; overflow: hidden; display: none; position: relative; }
     .loading-bar.active { display: block; }
@@ -678,7 +676,6 @@ function setStatus(msg) { document.getElementById('status-text').textContent = m
 function setLoading(on) {
   document.getElementById('loading-bar').classList.toggle('active', on);
   const btn = document.getElementById('refresh-btn');
-  btn.classList.toggle('spinning', on);
   btn.disabled = on;
 }
 
