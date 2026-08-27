@@ -182,26 +182,17 @@ function processEntries(raw) {
                   : null;
     if (!stgName && !/STG/i.test(cat)) continue;
 
-    const team      = stgName || clubField || teamField || 'STG Unknown';
-    const splitData = parseLastSplit(e.Splits);
-    const secsResult = parseSecs(e.Result);
-
-    // Prefer last split's T (chip/race time) over Result (may be gun time in wave starts).
-    // Only applies to finished athletes — for mid-race athletes the last split is a CP, not the finish.
-    const secsChip = (secsResult != null && splitData?.timeStr)
-      ? (parseSecs(splitData.timeStr) ?? secsResult)
-      : secsResult;
-    const timeStr = secsChip != null
-      ? (splitData?.timeStr && parseSecs(splitData.timeStr) != null ? splitData.timeStr : e.Result.trim())
-      : null;
+    const team       = stgName || clubField || teamField || 'STG Unknown';
+    const splitData  = parseLastSplit(e.Splits);
+    const secs       = parseSecs(e.Result);
 
     if (!out[team]) out[team] = [];
     out[team].push({
       name:      (e.N || '').trim(),
       sex:       e.Sex === 'F' ? 'F' : 'M',
       bib:       e.Bib,
-      time:      timeStr,
-      secs:      secsChip,
+      time:      secs != null ? e.Result.trim() : null,
+      secs,
       cp:        splitData ? splitData.cp : 0,
       splitTime: splitData ? splitData.timeStr : null,
       splits:    Array.isArray(e.Splits) ? e.Splits : [],

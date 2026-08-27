@@ -19,7 +19,7 @@
       {
         "Id": 102, "Bib": 102, "N": "Fekete Tibor", "C": "STG", "Sex": "M", "Status": 1,
         "Team": "STG-Budapest A", "Club": "Budapest",
-        "Result": "4:18:40", "RLaps": 1, "ResultReal": "",
+        "Result": "4:08:40", "RLaps": 1, "ResultReal": "",
         "Splits": [
           {"T":"0:43:10","DT":"08:53:10"},{"T":"1:26:30","DT":"09:36:30"},
           {"T":"2:10:05","DT":"10:20:05"},{"T":"2:55:20","DT":"11:05:20"},
@@ -71,7 +71,7 @@
       {
         "Id": 201, "Bib": 201, "N": "Nagy Péter", "C": "STG", "Sex": "M", "Status": 1,
         "Team": "STG-Dunakeszi 4+", "Club": "Dunakeszi",
-        "Result": "4:25:10", "RLaps": 1, "ResultReal": "",
+        "Result": "4:15:10", "RLaps": 1, "ResultReal": "",
         "Splits": [
           {"T":"0:44:30","DT":"08:54:30"},{"T":"1:28:00","DT":"09:38:00"},
           {"T":"2:12:40","DT":"10:22:40"},{"T":"2:58:10","DT":"11:08:10"},

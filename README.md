@@ -67,7 +67,7 @@ live.onlinesystem.cz API
 - At least **1 female** must be in the scoring 4
 - If the fastest 4 are all male, the slowest of those 4 is replaced by the fastest female finisher
 - ★ marks which members count toward the team score
-- Finish times use the chip time (`T` field in splits) to correctly handle wave starts
+- Finish times use the `Result` field, which is already chip time (corrected for wave starts)
 - Mid-race: the same rules are applied to checkpoint split times to give an estimated team score
 
 ---
