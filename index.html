@@ -115,7 +115,13 @@
     .mname { flex: 1; font-size: 14px; }
     .mtime { font-family: 'Courier New', monospace; font-size: 14px; font-weight: 600; }
     .mtime.done { color: #4caf50; }
+    .mtime.onc  { color: #ff9800; }
     .mtime.wait { color: #444; font-size: 12px; }
+    .mcp { display: flex; align-items: center; gap: 5px; }
+    .cpbadge {
+      font-size: 10px; font-weight: 800; background: #ff9800; color: #111;
+      padding: 2px 5px; border-radius: 3px; flex-shrink: 0;
+    }
     .star { color: gold; font-size: 13px; margin-left: 3px; }
     .score-note { font-size: 11px; color: #555; padding: 6px 14px 10px; background: #181818; }
 
@@ -389,6 +395,18 @@ function fmtSecs(secs) {
 
 function pad(n) { return String(n).padStart(2, '0'); }
 
+function parseLastSplit(splits) {
+  if (!Array.isArray(splits) || splits.length === 0) return null;
+  const last = splits[splits.length - 1];
+  let timeStr = null;
+  if (typeof last === 'string') timeStr = last;
+  else if (last && typeof last === 'object') {
+    const raw = last.T ?? last.Time ?? last.time ?? last.Result ?? null;
+    if (raw != null) timeStr = String(raw);
+  }
+  return { cp: splits.length, timeStr };
+}
+
 // ── Process entries ───────────────────────────────────────
 function processEntries(raw) {
   if (!Array.isArray(raw)) return {};
@@ -405,18 +423,27 @@ function processEntries(raw) {
 
     const team = stgName || clubField || teamField || 'STG Unknown';
     const secs = parseSecs(e.Result);
+    const splitData = parseLastSplit(e.Splits);
 
     if (!out[team]) out[team] = [];
     out[team].push({
-      name: (e.N || '').trim(),
-      sex:  e.Sex === 'F' ? 'F' : 'M',
-      bib:  e.Bib,
-      time: secs != null ? e.Result.trim() : null,
+      name:      (e.N || '').trim(),
+      sex:       e.Sex === 'F' ? 'F' : 'M',
+      bib:       e.Bib,
+      time:      secs != null ? e.Result.trim() : null,
       secs,
+      cp:        splitData ? splitData.cp : 0,
+      splitTime: splitData ? splitData.timeStr : null,
     });
   }
   for (const members of Object.values(out)) {
-    members.sort((a, b) => (a.secs ?? Infinity) - (b.secs ?? Infinity));
+    members.sort((a, b) => {
+      if (a.secs != null && b.secs != null) return a.secs - b.secs;
+      if (a.secs != null) return -1;
+      if (b.secs != null) return  1;
+      if (a.cp !== b.cp)  return b.cp - a.cp;
+      return (parseSecs(a.splitTime) ?? Infinity) - (parseSecs(b.splitTime) ?? Infinity);
+    });
   }
   return out;
 }
@@ -424,15 +451,16 @@ function processEntries(raw) {
 // ── Team score ────────────────────────────────────────────
 function calcScore(members) {
   const finished = members.filter(m => m.secs != null);
+  const onCourse = members.filter(m => m.secs == null && m.cp > 0);
   const females  = finished.filter(m => m.sex === 'F');
   const total    = members.length;
 
   if (finished.length === 0)
-    return { status: 'nodata',    score: null, scoring: [], finished, total };
+    return { status: 'nodata',    score: null, scoring: [], finished, onCourse, total };
   if (finished.length < 4)
-    return { status: 'waiting',   score: null, scoring: [], finished, total };
+    return { status: 'waiting',   score: null, scoring: [], finished, onCourse, total };
   if (females.length === 0)
-    return { status: 'no_female', score: null, scoring: [], finished, total };
+    return { status: 'no_female', score: null, scoring: [], finished, onCourse, total };
 
   const top4 = finished.slice(0, 4);
   let scoring;
@@ -443,7 +471,7 @@ function calcScore(members) {
   }
 
   const avg = Math.round(scoring.reduce((s, m) => s + m.secs, 0) / 4);
-  return { status: 'valid', score: avg, scoring, finished, total };
+  return { status: 'valid', score: avg, scoring, finished, onCourse, total };
 }
 
 // ── Render: my team ───────────────────────────────────────
@@ -459,25 +487,31 @@ function renderMyTeam() {
     return;
   }
 
-  const { status, score, scoring, finished, total } = calcScore(members);
+  const { status, score, scoring, finished, onCourse, total } = calcScore(members);
   const scoringBibs = new Set(scoring.map(m => m.bib));
 
+  const racingNote = onCourse.length > 0 ? ` · ${onCourse.length} racing` : '';
   const scoreLbl = {
     valid:     `<span class="c-green">${fmtSecs(score)}</span>`,
-    waiting:   `<span class="c-orange">⏳ ${finished.length}/${total} done</span>`,
+    waiting:   `<span class="c-orange">⏳ ${finished.length} done${racingNote}</span>`,
     no_female: `<span class="c-red">⚠ No female finisher yet</span>`,
     nodata:    `<span class="c-dim">Waiting…</span>`,
   }[status];
 
   const rows = members.map(m => {
-    const t = m.time
-      ? `<span class="mtime done">${m.time}</span>`
-      : `<span class="mtime wait">not finished</span>`;
+    let timeEl;
+    if (m.secs != null) {
+      timeEl = `<span class="mtime done">${m.time}</span>`;
+    } else if (m.cp > 0) {
+      timeEl = `<div class="mcp"><span class="cpbadge">CP${m.cp}</span><span class="mtime onc">${m.splitTime || '—'}</span></div>`;
+    } else {
+      timeEl = `<span class="mtime wait">—</span>`;
+    }
     const s = scoringBibs.has(m.bib) ? '<span class="star">★</span>' : '';
     return `<div class="mrow">
       <div class="gbadge ${m.sex}">${m.sex}</div>
       <div class="mname">${esc(m.name)}</div>
-      ${t}${s}
+      ${timeEl}${s}
     </div>`;
   }).join('');
 
@@ -531,23 +565,33 @@ function renderRankings() {
       ? `<span class="rscore c-red">⚠</span>`
       : `<span class="rscore c-dim">—</span>`;
 
-    const detailId   = `d${i}`;
-    const isOpen     = expanded.has(detailId);
+    const detailId    = `d${i}`;
+    const isOpen      = expanded.has(detailId);
     const scoringBibs = new Set(t.scoring.map(m => m.bib));
-    const detailRows  = t.finished.map(m => `
-      <div class="drow">
+    const allMembers  = teams[t.name] || [];
+    const detailRows  = allMembers.map(m => {
+      let timeEl;
+      if (m.secs != null) {
+        timeEl = `<span class="dtime">${m.time}</span>`;
+      } else if (m.cp > 0) {
+        timeEl = `<span class="dtime" style="color:#ff9800">CP${m.cp} · ${m.splitTime || '—'}</span>`;
+      } else {
+        timeEl = `<span class="dtime" style="color:#444">—</span>`;
+      }
+      return `<div class="drow">
         <div class="gbadge ${m.sex}" style="width:16px;height:16px;font-size:8px">${m.sex}</div>
         ${esc(m.name)}
-        <span class="dtime">${m.time}</span>
+        ${timeEl}
         ${scoringBibs.has(m.bib) ? '<span class="dstar">★</span>' : ''}
-      </div>`).join('');
+      </div>`;
+    }).join('');
 
     return `
       <div class="trow${isMe ? ' mine' : ''}" onclick="toggleDetail('${detailId}')">
         <div class="rpos ${posClass}">${posNum}</div>
         <div class="rname">${isMe ? '★ ' : ''}${esc(t.name)}</div>
         ${scoreTxt}
-        <span class="rprog">${t.finished.length}/${t.total}</span>
+        <span class="rprog">${t.finished.length}+${t.onCourse.length}/${t.total}</span>
       </div>
       <div id="${detailId}" class="tdetail${isOpen ? ' open' : ''}">${detailRows}</div>`;
   }).join('');
