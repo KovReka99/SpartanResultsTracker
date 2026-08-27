@@ -14,7 +14,6 @@
       font-size: 15px;
     }
 
-    /* ── Header ── */
     header {
       background: #b01020;
       padding: 12px 16px;
@@ -22,7 +21,6 @@
     header h1 { font-size: 19px; font-weight: 800; color: #fff; }
     header p  { font-size: 13px; color: rgba(255,255,255,0.7); margin-top: 2px; }
 
-    /* ── Status bar ── */
     .status-bar {
       background: #1c1c1c;
       padding: 7px 16px;
@@ -34,64 +32,25 @@
       border-bottom: 1px solid #252525;
     }
     .btn-sm {
-      background: #b01020;
-      color: #fff;
-      border: none;
-      padding: 4px 12px;
-      border-radius: 4px;
-      font-size: 12px;
-      cursor: pointer;
+      background: #b01020; color: #fff; border: none;
+      padding: 4px 12px; border-radius: 4px; font-size: 12px; cursor: pointer;
     }
 
-    /* ── URL panel ── */
-    #url-panel {
-      background: #181818;
-      padding: 14px 16px;
-      border-bottom: 1px solid #252525;
-    }
-    #url-panel p { font-size: 13px; color: #777; margin-bottom: 8px; }
-    #url-panel ol { font-size: 13px; color: #777; padding-left: 18px; line-height: 1.8; margin-bottom: 10px; }
-    #url-panel ol li b { color: #aaa; }
-    .url-row { display: flex; gap: 8px; }
-    .url-row input {
-      flex: 1; padding: 9px 10px;
-      border-radius: 5px; border: 1px solid #333;
-      background: #222; color: #eee; font-size: 13px;
-    }
-    .url-row button {
-      background: #b01020; color: #fff;
-      border: none; padding: 9px 16px;
-      border-radius: 5px; font-size: 13px; cursor: pointer;
-    }
-    .btn-link {
-      background: none; border: none;
-      color: #666; font-size: 12px;
-      cursor: pointer; margin-top: 8px;
-      text-decoration: underline;
-    }
-
-    /* ── Sections ── */
     .section { padding: 14px 16px; }
     .section-title {
-      font-size: 11px; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 1.2px;
-      color: #555; margin-bottom: 10px;
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1.2px; color: #555; margin-bottom: 10px;
     }
 
-    /* ── My team card ── */
-    .my-card {
-      border: 2px solid #b01020;
-      border-radius: 8px; overflow: hidden;
-    }
+    /* My team card */
+    .my-card { border: 2px solid #b01020; border-radius: 8px; overflow: hidden; }
     .my-card-head {
-      background: #b01020;
-      padding: 10px 14px;
+      background: #b01020; padding: 10px 14px;
       display: flex; justify-content: space-between; align-items: center;
     }
     .my-card-head .tname { font-weight: 800; font-size: 16px; }
     .my-card-head .tscore { font-weight: 700; font-size: 15px; }
 
-    /* ── Member rows ── */
     .mrow {
       display: flex; align-items: center;
       padding: 9px 14px; gap: 10px;
@@ -113,7 +72,7 @@
     .star { color: gold; font-size: 13px; margin-left: 3px; }
     .score-note { font-size: 11px; color: #555; padding: 6px 14px 10px; background: #181818; }
 
-    /* ── Rankings ── */
+    /* Rankings */
     .rcard { border-radius: 8px; overflow: hidden; }
     .trow {
       display: flex; align-items: center;
@@ -123,7 +82,6 @@
     }
     .trow:last-of-type { border-bottom: none; }
     .trow.mine { background: #1f0d0d; border-left: 3px solid #b01020; }
-    .trow:active { background: #222; }
     .rpos { width: 26px; font-size: 14px; font-weight: 700; text-align: center; flex-shrink: 0; color: #444; }
     .rpos.p1 { color: #ffd700; }
     .rpos.p2 { color: #c0c0c0; }
@@ -132,7 +90,6 @@
     .rscore { font-family: 'Courier New', monospace; font-size: 13px; font-weight: 700; }
     .rprog  { font-size: 11px; color: #444; min-width: 30px; text-align: right; }
 
-    /* expandable detail */
     .tdetail { display: none; background: #141414; border-bottom: 1px solid #1e1e1e; }
     .tdetail.open { display: block; }
     .drow {
@@ -142,24 +99,22 @@
       border-bottom: 1px solid #1a1a1a;
     }
     .drow:last-child { border-bottom: none; }
-    .dtime { font-family: 'Courier New', monospace; margin-left: auto; }
-    .dtime.done { color: #4caf50; }
+    .dtime { font-family: 'Courier New', monospace; margin-left: auto; color: #4caf50; }
     .dstar { color: gold; font-size: 11px; }
 
-    /* ── Utility ── */
     .c-green  { color: #4caf50; }
     .c-orange { color: #ff9800; }
     .c-red    { color: #f44336; }
     .c-dim    { color: #444; }
+
     .info-box {
-      background: #181818; border: 1px solid #2a2a2a;
-      border-radius: 6px; padding: 16px;
-      color: #777; font-size: 13px; text-align: center;
+      background: #181818; border: 1px solid #2a2a2a; border-radius: 6px;
+      padding: 16px; color: #777; font-size: 13px; text-align: center; line-height: 1.6;
     }
+    .info-box b { color: #aaa; }
     .err-box {
-      background: #2a1212; border: 1px solid #b01020;
-      border-radius: 6px; padding: 12px;
-      color: #f88; font-size: 13px;
+      background: #2a1212; border: 1px solid #b01020; border-radius: 6px;
+      padding: 12px; color: #f88; font-size: 13px; line-height: 1.6;
     }
   </style>
 </head>
@@ -171,151 +126,46 @@
 </header>
 
 <div class="status-bar">
-  <span id="status-text">Waiting for results URL…</span>
+  <span id="status-text">Loading…</span>
   <button class="btn-sm" onclick="manualRefresh()">↻ Refresh</button>
-</div>
-
-<div id="url-panel">
-  <p>How to get the results URL on race day:</p>
-  <ol>
-    <li>Open <b>live.onlinesystem.cz</b></li>
-    <li>Find <b>Bielsko-Biała Ultra</b> and tap it</li>
-    <li>Select the <b>STG / Ultra</b> category</li>
-    <li>Copy the URL and paste it below</li>
-  </ol>
-  <div class="url-row">
-    <input id="url-input" type="url"
-      placeholder="https://live.onlinesystem.cz/results?id=3579&idTrack=…" />
-    <button onclick="applyUrl()">Load</button>
-  </div>
-  <div id="clear-row" style="display:none">
-    <button class="btn-link" onclick="clearUrl()">✕ Change URL</button>
-  </div>
 </div>
 
 <div class="section">
   <div class="section-title">My Team — STG-Dunakeszi 4+</div>
-  <div id="my-team"><div class="info-box">Paste the results URL above to start tracking.</div></div>
+  <div id="my-team"><div class="info-box">Loading…</div></div>
 </div>
 
 <div class="section">
-  <div class="section-title">All STG Teams &nbsp;<span id="team-count" style="font-weight:400;color:#555"></span></div>
+  <div class="section-title">All STG Teams <span id="team-count" style="font-weight:400;color:#555"></span></div>
   <div id="rankings"></div>
 </div>
 
 <script>
-// ── Config ────────────────────────────────────────────────
-const MY_TEAM = 'STG-Dunakeszi 4+';
-const INTERVAL = 60; // auto-refresh seconds
+const MY_TEAM  = 'STG-Dunakeszi 4+';
+const INTERVAL = 60;
 
-// ── State ─────────────────────────────────────────────────
-let eventId  = '';
-let idTrack  = '';
-let teams    = {};   // { teamName: [ {name,sex,bib,time,secs} ] }
+let teams    = {};
 let ticker   = null;
 let countdown = INTERVAL;
 let expanded  = new Set();
 
-// ── Boot: restore saved URL ───────────────────────────────
-(function boot() {
-  const saved = localStorage.getItem('spartan_track_url') || '';
-  if (!saved) return;
-  document.getElementById('url-input').value = saved;
-  if (parseUrl(saved)) {
-    showClearBtn();
-    refresh();
-  }
-})();
+// ── Fetch from results.json (same domain, no CORS) ───────
+async function fetchData() {
+  // Cache-bust so we always get the latest version
+  const r = await fetch(`./results.json?t=${Date.now()}`, {
+    signal: AbortSignal.timeout(10000)
+  });
+  if (!r.ok) throw new Error(`HTTP ${r.status} loading results.json`);
+  const json = await r.json();
 
-// ── URL handling ──────────────────────────────────────────
-function parseUrl(raw) {
-  try {
-    const u = new URL(raw.trim());
-    const id  = u.searchParams.get('id') || u.searchParams.get('eventId');
-    const trk = u.searchParams.get('idTrack');
-    if (!id) return false;
-    eventId = id;
-    idTrack = trk || '';
-    return true;
-  } catch { return false; }
+  // File can be: plain array, {updated,data:[...]}, or {status,message}
+  if (Array.isArray(json)) return { data: json, updated: null };
+  if (json.status === 'waiting') return { data: [], updated: null, message: json.message };
+  if (json.data)                 return { data: json.data, updated: json.updated || null };
+  return { data: [], updated: null };
 }
 
-function applyUrl() {
-  const val = document.getElementById('url-input').value.trim();
-  if (!val || !parseUrl(val)) {
-    setStatus('Paste a valid live.onlinesystem.cz URL');
-    return;
-  }
-  localStorage.setItem('spartan_track_url', val);
-  showClearBtn();
-  refresh();
-}
-
-function clearUrl() {
-  eventId = ''; idTrack = '';
-  teams = {}; expanded.clear();
-  localStorage.removeItem('spartan_track_url');
-  document.getElementById('url-input').value = '';
-  document.getElementById('clear-row').style.display = 'none';
-  if (ticker) { clearInterval(ticker); ticker = null; }
-  renderMyTeam();
-  renderRankings();
-  setStatus('Waiting for results URL…');
-}
-
-function showClearBtn() {
-  document.getElementById('clear-row').style.display = 'block';
-}
-
-// ── API ───────────────────────────────────────────────────
-function buildApiUrl() {
-  return `https://live.onlinesystem.cz/api/ResultsList/List/?`
-    + `searchText=&category=&eventId=${eventId}&idTrack=${idTrack}`
-    + `&exportType=5&take=5000&skip=0&page=1&pageSize=5000`
-    + `&sort[0][field]=OrA&sort[0][dir]=asc`;
-}
-
-async function fetchJson(url) {
-  // Try direct first (works on localhost; blocked by CORS on GitHub Pages — that's expected)
-  try {
-    const r = await fetch(url, { signal: AbortSignal.timeout(8000) });
-    if (r.ok) return normalize(await r.json());
-  } catch {}
-
-  // Proxy fallback — each proxy has a different response shape
-  const proxies = [
-    {
-      // corsproxy.io returns the raw API response directly
-      make:  u => `https://corsproxy.io/?${encodeURIComponent(u)}`,
-      parse: async r => normalize(await r.json()),
-    },
-    {
-      // allorigins wraps response in { contents: "..." }
-      make:  u => `https://api.allorigins.win/get?url=${encodeURIComponent(u)}`,
-      parse: async r => { const j = await r.json(); return normalize(JSON.parse(j.contents)); },
-    },
-    {
-      // codetabs returns raw response
-      make:  u => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(u)}`,
-      parse: async r => normalize(await r.json()),
-    },
-  ];
-
-  for (const proxy of proxies) {
-    try {
-      const r = await fetch(proxy.make(url), { signal: AbortSignal.timeout(14000) });
-      if (!r.ok) continue;
-      return await proxy.parse(r);
-    } catch {}
-  }
-  throw new Error('Could not reach the results API — check your internet connection');
-}
-
-function normalize(raw) {
-  return Array.isArray(raw) ? raw : (raw.data || raw.results || raw.items || []);
-}
-
-// ── Time helpers ──────────────────────────────────────────
+// ── Time helpers ─────────────────────────────────────────
 const TIME_RE = /^\d{1,3}:\d{2}:\d{2}$/;
 
 function parseSecs(s) {
@@ -334,11 +184,10 @@ function fmtSecs(secs) {
 
 function pad(n) { return String(n).padStart(2, '0'); }
 
-// ── Data processing ───────────────────────────────────────
+// ── Process entries ───────────────────────────────────────
 function processEntries(raw) {
   const out = {};
   for (const e of raw) {
-    // Team name: prefer Team field, then Club, then check category
     const teamField = (e.Team || '').trim();
     const clubField = (e.Club || '').trim();
     const cat       = (e.C   || '').trim();
@@ -346,9 +195,8 @@ function processEntries(raw) {
     const stgName = /^STG/i.test(teamField) ? teamField
                   : /^STG/i.test(clubField) ? clubField
                   : null;
-    const stgCat  = /STG/i.test(cat);
 
-    if (!stgName && !stgCat) continue;
+    if (!stgName && !/STG/i.test(cat)) continue;
 
     const team = stgName || clubField || teamField || 'STG Unknown';
     const secs = parseSecs(e.Result);
@@ -362,15 +210,8 @@ function processEntries(raw) {
       secs,
     });
   }
-
-  // Sort each team: finishers first (fastest first), then non-finishers
   for (const members of Object.values(out)) {
-    members.sort((a, b) => {
-      if (a.secs != null && b.secs != null) return a.secs - b.secs;
-      if (a.secs != null) return -1;
-      if (b.secs != null) return 1;
-      return 0;
-    });
+    members.sort((a, b) => (a.secs ?? Infinity) - (b.secs ?? Infinity));
   }
   return out;
 }
@@ -393,9 +234,7 @@ function calcScore(members) {
   if (top4.some(m => m.sex === 'F')) {
     scoring = top4;
   } else {
-    // Swap slowest of top-4 for fastest female
-    scoring = [...top4.slice(0, 3), females[0]]
-      .sort((a, b) => a.secs - b.secs);
+    scoring = [...top4.slice(0, 3), females[0]].sort((a, b) => a.secs - b.secs);
   }
 
   const avg = Math.round(scoring.reduce((s, m) => s + m.secs, 0) / 4);
@@ -405,15 +244,13 @@ function calcScore(members) {
 // ── Render: my team ───────────────────────────────────────
 function renderMyTeam() {
   const el = document.getElementById('my-team');
-
-  if (!eventId) {
-    el.innerHTML = '<div class="info-box">Paste the results URL above to start tracking.</div>';
-    return;
-  }
-
   const members = teams[MY_TEAM];
+
   if (!members || members.length === 0) {
-    el.innerHTML = '<div class="info-box">STG-Dunakeszi 4+ not in results yet —<br>waiting for the first team member to finish.</div>';
+    el.innerHTML = `<div class="info-box">
+      STG-Dunakeszi 4+ not in results yet.<br>
+      Waiting for the first team member to finish.
+    </div>`;
     return;
   }
 
@@ -423,7 +260,7 @@ function renderMyTeam() {
   const scoreLbl = {
     valid:     `<span class="c-green">${fmtSecs(score)}</span>`,
     waiting:   `<span class="c-orange">⏳ ${finished.length}/${total} done</span>`,
-    no_female: `<span class="c-red">⚠ No female finisher</span>`,
+    no_female: `<span class="c-red">⚠ No female finisher yet</span>`,
     nodata:    `<span class="c-dim">Waiting…</span>`,
   }[status];
 
@@ -440,25 +277,24 @@ function renderMyTeam() {
   }).join('');
 
   const note = status === 'valid'
-    ? `<div class="score-note">★ counted in score &nbsp;·&nbsp; avg of best 4, ≥ 1 female</div>`
+    ? `<div class="score-note">★ counted in team score &nbsp;·&nbsp; avg of best 4, ≥1 female</div>`
     : '';
 
-  el.innerHTML = `
-    <div class="my-card">
-      <div class="my-card-head">
-        <span class="tname">${esc(MY_TEAM)}</span>
-        <span class="tscore">${scoreLbl}</span>
-      </div>
-      ${rows}${note}
-    </div>`;
+  el.innerHTML = `<div class="my-card">
+    <div class="my-card-head">
+      <span class="tname">${esc(MY_TEAM)}</span>
+      <span class="tscore">${scoreLbl}</span>
+    </div>
+    ${rows}${note}
+  </div>`;
 }
 
-// ── Render: rankings ──────────────────────────────────────
+// ── Render: rankings ─────────────────────────────────────
 function renderRankings() {
   const el = document.getElementById('rankings');
   const tc = document.getElementById('team-count');
 
-  if (!eventId || Object.keys(teams).length === 0) {
+  if (Object.keys(teams).length === 0) {
     el.innerHTML = '';
     tc.textContent = '';
     return;
@@ -484,7 +320,7 @@ function renderRankings() {
     const isMe = t.name === MY_TEAM;
     if (t.status === 'valid') validRank++;
 
-    const posNum = t.status === 'valid' ? validRank : '—';
+    const posNum   = t.status === 'valid' ? validRank : '—';
     const posClass = validRank <= 3 && t.status === 'valid' ? `p${validRank}` : '';
 
     const scoreTxt = t.status === 'valid'
@@ -493,27 +329,24 @@ function renderRankings() {
       ? `<span class="rscore c-red">⚠</span>`
       : `<span class="rscore c-dim">—</span>`;
 
-    const prog = `<span class="rprog">${t.finished.length}/${t.total}</span>`;
     const detailId = `d${i}`;
-    const isOpen = expanded.has(detailId);
+    const isOpen   = expanded.has(detailId);
 
-    // Detail: show all finished members
     const scoringBibs = new Set(t.scoring.map(m => m.bib));
-    const detailRows = t.finished.map(m => {
-      const isStar = scoringBibs.has(m.bib);
-      return `<div class="drow">
+    const detailRows  = t.finished.map(m => `
+      <div class="drow">
         <div class="gbadge ${m.sex}" style="width:16px;height:16px;font-size:8px">${m.sex}</div>
         ${esc(m.name)}
-        <span class="dtime done">${m.time}</span>
-        ${isStar ? '<span class="dstar">★</span>' : ''}
-      </div>`;
-    }).join('');
+        <span class="dtime">${m.time}</span>
+        ${scoringBibs.has(m.bib) ? '<span class="dstar">★</span>' : ''}
+      </div>`).join('');
 
     return `
       <div class="trow${isMe ? ' mine' : ''}" onclick="toggleDetail('${detailId}')">
         <div class="rpos ${posClass}">${posNum}</div>
         <div class="rname">${isMe ? '★ ' : ''}${esc(t.name)}</div>
-        ${scoreTxt}${prog}
+        ${scoreTxt}
+        <span class="rprog">${t.finished.length}/${t.total}</span>
       </div>
       <div id="${detailId}" class="tdetail${isOpen ? ' open' : ''}">${detailRows}</div>`;
   }).join('');
@@ -522,67 +355,68 @@ function renderRankings() {
 }
 
 function toggleDetail(id) {
-  if (expanded.has(id)) expanded.delete(id);
-  else expanded.add(id);
+  if (expanded.has(id)) expanded.delete(id); else expanded.add(id);
   const el = document.getElementById(id);
   if (el) el.classList.toggle('open');
 }
 
 // ── Status ────────────────────────────────────────────────
-function setStatus(msg) {
-  document.getElementById('status-text').textContent = msg;
-}
+function setStatus(msg) { document.getElementById('status-text').textContent = msg; }
 
-function updateStatus() {
-  if (!eventId) { setStatus('Waiting for results URL…'); return; }
-  const n = Object.values(teams).reduce((s, m) => s + m.filter(x => x.secs).length, 0);
-  const time = new Date().toLocaleTimeString();
-  setStatus(`${n} finishers · ${time} · refresh in ${countdown}s`);
+function updateStatus(updatedAt) {
+  const finishers = Object.values(teams).reduce((s, m) => s + m.filter(x => x.secs).length, 0);
+  const age = updatedAt ? ` · data from ${updatedAt}` : '';
+  setStatus(`${finishers} finishers · refresh in ${countdown}s${age}`);
 }
 
 // ── Refresh ───────────────────────────────────────────────
+let lastUpdated = null;
+
 async function refresh() {
-  if (!eventId) return;
   setStatus('Loading…');
   try {
-    const raw = await fetchJson(buildApiUrl());
-    teams = processEntries(raw);
-    const totalEntries = raw.length;
-    const stgTeamCount = Object.keys(teams).length;
+    const { data, updated, message } = await fetchData();
+    lastUpdated = updated || lastUpdated;
 
-    if (totalEntries === 0) {
-      setStatus('Got a response but it was empty — wrong URL?');
-      document.getElementById('my-team').innerHTML =
-        `<div class="err-box">No data returned. Double-check the URL has both <b>id=</b> and <b>idTrack=</b> in it.</div>`;
+    if (data.length === 0 && message) {
+      setStatus('Race not started yet — track ID not configured');
+      document.getElementById('my-team').innerHTML = `<div class="info-box">
+        <b>Race data not configured yet.</b><br><br>
+        On race morning: open the GitHub workflow file and replace <b>XXXXX</b>
+        with the track ID from live.onlinesystem.cz.
+      </div>`;
+      document.getElementById('rankings').innerHTML = '';
+      document.getElementById('team-count').textContent = '';
       return;
     }
 
-    if (stgTeamCount === 0) {
-      setStatus(`Loaded ${totalEntries} entries — no STG teams found in this category`);
-      document.getElementById('my-team').innerHTML =
-        `<div class="info-box">Loaded ${totalEntries} results but found no STG teams.<br><br>
-        This is normal if you used a non-STG category URL (e.g. BEAST/SPRINT).<br>
-        On race day, select the <b>STG / Ultra</b> category on live.onlinesystem.cz first.</div>`;
+    teams = processEntries(data);
+    const stgCount = Object.keys(teams).length;
+
+    if (stgCount === 0 && data.length > 0) {
+      setStatus(`Loaded ${data.length} entries — no STG teams found`);
+      document.getElementById('my-team').innerHTML = `<div class="info-box">
+        Loaded ${data.length} results but found no STG teams.<br>
+        Check that the workflow has the correct STG track ID.
+      </div>`;
       document.getElementById('rankings').innerHTML = '';
-      document.getElementById('team-count').textContent = '';
       return;
     }
 
     renderMyTeam();
     renderRankings();
     countdown = INTERVAL;
-    updateStatus();
+    updateStatus(lastUpdated);
     startTicker();
   } catch (e) {
-    setStatus(`Failed to load — ${e.message}`);
-    document.getElementById('my-team').innerHTML =
-      `<div class="err-box"><b>Could not load results.</b><br><br>${esc(e.message)}<br><br>
-      Check your internet connection and try Refresh.</div>`;
+    setStatus(`Error loading data`);
+    document.getElementById('my-team').innerHTML = `<div class="err-box">
+      <b>Could not load results.json</b><br><br>${esc(e.message)}
+    </div>`;
   }
 }
 
 async function manualRefresh() {
-  if (!eventId) return;
   if (ticker) { clearInterval(ticker); ticker = null; }
   await refresh();
 }
@@ -593,17 +427,15 @@ function startTicker() {
   ticker = setInterval(() => {
     countdown--;
     if (countdown <= 0) refresh();
-    else updateStatus();
+    else updateStatus(lastUpdated);
   }, 1000);
 }
 
-// ── Utils ─────────────────────────────────────────────────
 function esc(s) {
-  return (s || '')
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
+  return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
+
+refresh();
 </script>
 </body>
 </html>
