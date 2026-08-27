@@ -207,10 +207,6 @@
 // ── Config ────────────────────────────────────────────────
 const MY_TEAM = 'STG-Dunakeszi 4+';
 const INTERVAL = 60; // auto-refresh seconds
-const CORS_PROXIES = [
-  u => `https://api.allorigins.win/get?url=${encodeURIComponent(u)}`,
-  u => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(u)}`,
-];
 
 // ── State ─────────────────────────────────────────────────
 let eventId  = '';
@@ -280,20 +276,36 @@ function buildApiUrl() {
 }
 
 async function fetchJson(url) {
-  // Try direct (works if the API sends CORS headers)
+  // Try direct first (works on localhost; blocked by CORS on GitHub Pages — that's expected)
   try {
     const r = await fetch(url, { signal: AbortSignal.timeout(8000) });
     if (r.ok) return normalize(await r.json());
   } catch {}
 
-  // Proxy fallback
-  for (const mkProxy of CORS_PROXIES) {
+  // Proxy fallback — each proxy has a different response shape
+  const proxies = [
+    {
+      // corsproxy.io returns the raw API response directly
+      make:  u => `https://corsproxy.io/?${encodeURIComponent(u)}`,
+      parse: async r => normalize(await r.json()),
+    },
+    {
+      // allorigins wraps response in { contents: "..." }
+      make:  u => `https://api.allorigins.win/get?url=${encodeURIComponent(u)}`,
+      parse: async r => { const j = await r.json(); return normalize(JSON.parse(j.contents)); },
+    },
+    {
+      // codetabs returns raw response
+      make:  u => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(u)}`,
+      parse: async r => normalize(await r.json()),
+    },
+  ];
+
+  for (const proxy of proxies) {
     try {
-      const r = await fetch(mkProxy(url), { signal: AbortSignal.timeout(14000) });
+      const r = await fetch(proxy.make(url), { signal: AbortSignal.timeout(14000) });
       if (!r.ok) continue;
-      const j = await r.json();
-      const raw = j.contents !== undefined ? JSON.parse(j.contents) : j;
-      return normalize(raw);
+      return await proxy.parse(r);
     } catch {}
   }
   throw new Error('Could not reach the results API — check your internet connection');
