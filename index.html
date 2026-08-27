@@ -124,6 +124,13 @@
     }
     .star { color: gold; font-size: 13px; margin-left: 3px; }
     .score-note { font-size: 11px; color: #555; padding: 6px 14px 10px; background: #181818; }
+    .cp-score-bar {
+      background: #131f35; border-top: 1px solid #1e2d4a;
+      padding: 8px 14px; font-size: 13px; color: #777;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .cp-score-bar .cplabel { font-size: 11px; }
+    .cp-score-bar .cpval { font-family: 'Courier New', monospace; font-weight: 700; color: #ff9800; }
 
     /* ── Rankings ── */
     .rcard { border-radius: 8px; overflow: hidden; }
@@ -440,6 +447,7 @@ function processEntries(raw) {
       secs,
       cp:        splitData ? splitData.cp : 0,
       splitTime: splitData ? splitData.timeStr : null,
+      splits:    Array.isArray(e.Splits) ? e.Splits : [],
     });
   }
   for (const members of Object.values(out)) {
@@ -478,6 +486,43 @@ function calcScore(members) {
 
   const avg = Math.round(scoring.reduce((s, m) => s + m.secs, 0) / 4);
   return { status: 'valid', score: avg, scoring, finished, onCourse, total };
+}
+
+// ── Checkpoint team score ─────────────────────────────────
+function getSecsAtCP(member, cpNum) {
+  if (member.splits.length < cpNum) return null;
+  const entry = member.splits[cpNum - 1];
+  const raw = typeof entry === 'string' ? entry
+            : (entry && typeof entry === 'object')
+              ? (entry.T ?? entry.Time ?? entry.time ?? null)
+              : null;
+  return raw ? parseSecs(String(raw)) : null;
+}
+
+function calcCPTeamScore(members, cpNum) {
+  const withTime = members
+    .map(m => ({ ...m, secs: getSecsAtCP(m, cpNum) }))
+    .filter(m => m.secs != null)
+    .sort((a, b) => a.secs - b.secs);
+
+  const females = withTime.filter(m => m.sex === 'F');
+  if (withTime.length < 4 || females.length === 0) return null;
+
+  const top4 = withTime.slice(0, 4);
+  const scoring = top4.some(m => m.sex === 'F')
+    ? top4
+    : [...top4.slice(0, 3), females[0]].sort((a, b) => a.secs - b.secs);
+
+  return Math.round(scoring.reduce((s, m) => s + m.secs, 0) / 4);
+}
+
+function bestCPTeamScore(members) {
+  const maxCP = members.reduce((m, x) => Math.max(m, x.cp), 0);
+  for (let cp = maxCP; cp >= 1; cp--) {
+    const score = calcCPTeamScore(members, cp);
+    if (score !== null) return { cp, score };
+  }
+  return null;
 }
 
 // ── Render: my team ───────────────────────────────────────
@@ -525,12 +570,23 @@ function renderMyTeam() {
     ? `<div class="score-note">★ counted in team score &nbsp;·&nbsp; avg of best 4, ≥1 female</div>`
     : '';
 
+  let cpBar = '';
+  if (status !== 'valid') {
+    const cp = bestCPTeamScore(members);
+    if (cp) {
+      cpBar = `<div class="cp-score-bar">
+        <span class="cplabel">CP${cp.cp} team time (in progress)</span>
+        <span class="cpval">${fmtSecs(cp.score)}</span>
+      </div>`;
+    }
+  }
+
   el.innerHTML = `<div class="my-card">
     <div class="my-card-head">
       <span class="tname">${esc(MY_TEAM)}</span>
       <span class="tscore">${scoreLbl}</span>
     </div>
-    ${rows}${note}
+    ${rows}${note}${cpBar}
   </div>`;
 }
 
@@ -565,11 +621,17 @@ function renderRankings() {
     const posNum   = t.status === 'valid' ? validRank : '—';
     const posClass = validRank <= 3 && t.status === 'valid' ? `p${validRank}` : '';
 
-    const scoreTxt = t.status === 'valid'
-      ? `<span class="rscore c-green">${fmtSecs(t.score)}</span>`
-      : t.status === 'no_female'
-      ? `<span class="rscore c-red">⚠</span>`
-      : `<span class="rscore c-dim">—</span>`;
+    let scoreTxt;
+    if (t.status === 'valid') {
+      scoreTxt = `<span class="rscore c-green">${fmtSecs(t.score)}</span>`;
+    } else if (t.status === 'no_female') {
+      scoreTxt = `<span class="rscore c-red">⚠ no F</span>`;
+    } else {
+      const cp = bestCPTeamScore(teams[t.name] || []);
+      scoreTxt = cp
+        ? `<span class="rscore" style="color:#ff9800;font-size:11px">CP${cp.cp}&nbsp;${fmtSecs(cp.score)}</span>`
+        : `<span class="rscore c-dim">—</span>`;
+    }
 
     const detailId    = `d${i}`;
     const isOpen      = expanded.has(detailId);
