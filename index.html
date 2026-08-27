@@ -177,6 +177,9 @@
   <button class="btn-gear" id="gear-btn" onclick="toggleSettings()" title="Change race">⚙</button>
 </header>
 
+<div id="test-banner" style="display:none;background:#ff9800;color:#111;text-align:center;font-size:12px;font-weight:700;padding:5px;">
+  TEST MODE — simulated mid-race data
+</div>
 <div class="status-bar">
   <span id="status-text">Loading…</span>
   <button class="btn-sm" id="refresh-btn" onclick="manualRefresh()">↻ Refresh</button>
@@ -355,8 +358,11 @@ async function updateGitHubConfig(config, pat) {
 }
 
 // ── Fetch results.json (same domain, no CORS) ─────────────
+const IS_TEST = new URLSearchParams(window.location.search).has('test');
+
 async function fetchData() {
-  const r = await fetch(`./results.json?t=${Date.now()}`, {
+  const file = IS_TEST ? './test-results.json' : './results.json';
+  const r = await fetch(`${file}?t=${Date.now()}`, {
     signal: AbortSignal.timeout(10000)
   });
   if (!r.ok) throw new Error(`HTTP ${r.status}`);
@@ -695,6 +701,7 @@ function esc(s) {
   return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
+if (IS_TEST) document.getElementById('test-banner').style.display = 'block';
 refresh();
 </script>
 </body>
