@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:results.onlinesystem.cz)",
+      "WebFetch(domain:spartanrace.onlinesystem.cz)"
+    ]
+  }
+}

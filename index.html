@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Spartan STG – Bielsko-Biała 2026</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #111;
+      color: #eee;
+      font-size: 15px;
+    }
+
+    header {
+      background: #b01020;
+      padding: 12px 16px;
+    }
+    header h1 { font-size: 19px; font-weight: 800; color: #fff; }
+    header p  { font-size: 13px; color: rgba(255,255,255,0.75); margin-top: 2px; }
+
+    .status-bar {
+      background: #1e1e1e;
+      padding: 7px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: #888;
+      border-bottom: 1px solid #2a2a2a;
+    }
+    .refresh-btn {
+      background: #b01020;
+      color: #fff;
+      border: none;
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    /* URL input panel */
+    #url-panel {
+      background: #1a1a1a;
+      border-bottom: 1px solid #2a2a2a;
+      padding: 14px 16px;
+    }
+    #url-panel p { font-size: 13px; color: #888; margin-bottom: 8px; }
+    .url-row { display: flex; gap: 8px; }
+    .url-row input {
+      flex: 1;
+      padding: 8px 10px;
+      border-radius: 5px;
+      border: 1px solid #333;
+      background: #222;
+      color: #eee;
+      font-size: 13px;
+    }
+    .url-row button {
+      background: #b01020;
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 5px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .url-clear {
+      background: none;
+      border: 1px solid #444;
+      color: #888;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    /* Sections */
+    .section { padding: 14px 16px; }
+    .section-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: #666;
+      margin-bottom: 10px;
+    }
+
+    /* My team card */
+    .my-team-card {
+      border: 2px solid #b01020;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #1a1a1a;
+      margin-bottom: 4px;
+    }
+    .my-team-card-header {
+      background: #b01020;
+      padding: 10px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .my-team-card-header .name { font-weight: 700; font-size: 16px; }
+    .my-team-card-header .score { font-weight: 700; font-size: 15px; }
+
+    /* Member rows */
+    .member-row {
+      display: flex;
+      align-items: center;
+      padding: 9px 14px;
+      gap: 10px;
+      border-bottom: 1px solid #222;
+    }
+    .member-row:last-child { border-bottom: none; }
+    .gender-badge {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; font-weight: 800;
+      flex-shrink: 0;
+    }
+    .gender-M { background: #1a5fa0; }
+    .gender-F { background: #9b1060; }
+    .member-name { flex: 1; font-size: 14px; }
+    .member-time {
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      font-weight: 600;
+      color: #4caf50;
+    }
+    .member-time.dnf { color: #555; font-size: 12px; }
+    .star { color: gold; font-size: 13px; margin-left: 2px; }
+
+    /* Score colors */
+    .score-valid  { color: #4caf50; }
+    .score-wait   { color: #ff9800; }
+    .score-bad    { color: #f44336; }
+
+    /* Rankings */
+    .rankings-card {
+      background: #1a1a1a;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .team-row {
+      display: flex;
+      align-items: center;
+      padding: 10px 14px;
+      gap: 10px;
+      border-bottom: 1px solid #222;
+    }
+    .team-row:last-child { border-bottom: none; }
+    .team-row.is-mine { background: #1f0e0e; border-left: 3px solid #b01020; }
+    .rank-pos {
+      width: 26px;
+      font-size: 14px;
+      font-weight: 700;
+      text-align: center;
+      flex-shrink: 0;
+      color: #555;
+    }
+    .rank-1 { color: #ffd700; }
+    .rank-2 { color: #c0c0c0; }
+    .rank-3 { color: #cd7f32; }
+    .team-row-name { flex: 1; font-size: 13px; }
+    .team-row-score {
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .team-row-progress { font-size: 11px; color: #555; min-width: 32px; text-align: right; }
+
+    /* Loading / error */
+    .loading { text-align: center; padding: 30px; color: #555; font-size: 14px; }
+    .error-box {
+      background: #2a1212;
+      border: 1px solid #b01020;
+      border-radius: 6px;
+      padding: 12px;
+      color: #f88;
+      font-size: 13px;
+      margin-top: 8px;
+    }
+    .info-box {
+      background: #1a1f2a;
+      border: 1px solid #334;
+      border-radius: 6px;
+      padding: 12px;
+      color: #99aacc;
+      font-size: 13px;
+      margin-top: 8px;
+    }
+
+    /* Score note */
+    .score-note {
+      font-size: 11px;
+      color: #666;
+      padding: 6px 14px 10px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Spartan STG Tracker</h1>
+  <p>Bielsko-Biała Ultra &middot; 29 August 2026</p>
+</header>
+
+<div class="status-bar">
+  <span id="status-text">Starting up…</span>
+  <button class="refresh-btn" onclick="manualRefresh()">&#x21BB; Refresh</button>
+</div>
+
+<div id="url-panel">
+  <p>Paste the live results URL when the race starts:</p>
+  <div class="url-row">
+    <input id="results-url-input" type="url"
+      placeholder="https://results.onlinesystem.cz/ResultsOverall/Index/…" />
+    <button onclick="applyResultsUrl()">Load</button>
+  </div>
+  <div id="url-clear-wrap" style="display:none">
+    <button class="url-clear" onclick="clearResultsUrl()">&#x2715; Clear URL / change race</button>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">My Team</div>
+  <div id="my-team-section"><div class="loading">Loading start list…</div></div>
+</div>
+
+<div class="section">
+  <div class="section-title">All STG Teams</div>
+  <div id="rankings-section"><div class="loading">Loading start list…</div></div>
+</div>
+
+<script>
+// ─── Config ───────────────────────────────────────────────
+const MY_TEAM   = 'STG-Dunakeszi 4+';
+const PAGES     = 9;
+const INTERVAL  = 60; // seconds between auto-refreshes
+const BASE_URL  = 'https://spartanrace.onlinesystem.cz/Events/StartList'
+                + '?eventId=982&title=bielsko---biala-spartan-ultra-2026-08-29&search=';
+const PROXIES   = [
+  url => `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`,
+  url => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
+];
+
+// ─── State ────────────────────────────────────────────────
+let teams      = {};   // { teamName: [ {bib, name, gender} ] }
+let resultMap  = {};   // { bib: {time, secs, pos} }
+let resultsUrl = localStorage.getItem('spartan_results_url') || '';
+let ticker     = null;
+let countdown  = INTERVAL;
+let loadError  = null;
+
+// ─── Proxy fetch ─────────────────────────────────────────
+async function proxyFetch(url) {
+  let lastErr;
+  for (const makeProxy of PROXIES) {
+    try {
+      const r = await fetch(makeProxy(url), { signal: AbortSignal.timeout(12000) });
+      if (!r.ok) continue;
+      const j = await r.json();
+      if (j && j.contents) return j.contents;
+      // codetabs returns plain text
+      if (typeof j === 'string') return j;
+    } catch (e) { lastErr = e; }
+  }
+  throw lastErr || new Error('All proxies failed');
+}
+
+// ─── Time helpers ─────────────────────────────────────────
+function parseSecs(s) {
+  if (!s) return Infinity;
+  const t = s.trim().replace(/[^\d:]/g, '');
+  const p = t.split(':').map(Number);
+  if (p.length === 3) return p[0]*3600 + p[1]*60 + p[2];
+  if (p.length === 2) return p[0]*60  + p[1];
+  return Infinity;
+}
+
+function fmt(secs) {
+  if (!isFinite(secs)) return '—';
+  const h = Math.floor(secs / 3600);
+  const m = Math.floor((secs % 3600) / 60);
+  const s = Math.floor(secs % 60);
+  return `${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+}
+
+function isFemale(g) {
+  return /^[žzfw]/i.test((g||'').trim());
+}
+
+// ─── Start list ───────────────────────────────────────────
+async function loadStartList() {
+  const htmlPages = await Promise.all(
+    Array.from({length: PAGES}, (_, i) =>
+      proxyFetch(BASE_URL + '&page=' + (i + 1))
+    )
+  );
+
+  const out = {};
+  for (const html of htmlPages) {
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    for (const row of doc.querySelectorAll('table tbody tr')) {
+      const cells = [...row.querySelectorAll('td')];
+      if (cells.length < 7) continue;
+      const bib    = cells[0].textContent.trim();
+      const gender = cells[1].textContent.trim();
+      const name   = cells[2].textContent.trim();
+      const wave   = cells[5].textContent.trim();
+      const team   = cells[6].textContent.trim();
+      if (!team || !wave.toUpperCase().includes('STG')) continue;
+      if (!out[team]) out[team] = [];
+      out[team].push({ bib, name, gender: isFemale(gender) ? 'F' : 'M' });
+    }
+  }
+  return out;
+}
+
+// ─── Results ──────────────────────────────────────────────
+async function loadResults() {
+  if (!resultsUrl) return;
+  const html = await proxyFetch(resultsUrl);
+  const doc  = new DOMParser().parseFromString(html, 'text/html');
+  const out  = {};
+  const TIME_RE = /^\d+:\d{2}:\d{2}$/;
+
+  for (const row of doc.querySelectorAll('table tbody tr')) {
+    const cells = [...row.querySelectorAll('td')].map(c => c.textContent.trim());
+    if (cells.length < 6) continue;
+
+    // Find the time cell (HH:MM:SS pattern)
+    let timeIdx = -1;
+    for (let i = cells.length - 1; i >= 0; i--) {
+      if (TIME_RE.test(cells[i])) { timeIdx = i; break; }
+    }
+    if (timeIdx === -1) continue;
+
+    // Bib is usually the second cell (index 1) or first numeric-looking cell
+    const bib = cells.find((c, i) => i > 0 && /^\d{4,6}$/.test(c));
+    if (!bib) continue;
+
+    const secs = parseSecs(cells[timeIdx]);
+    if (isFinite(secs)) {
+      out[bib] = { time: cells[timeIdx], secs, pos: cells[0] };
+    }
+  }
+  return out;
+}
+
+// ─── Team score ───────────────────────────────────────────
+function calcScore(members) {
+  const finished = members
+    .map(m => ({ ...m, r: resultMap[m.bib] }))
+    .filter(m => m.r)
+    .sort((a, b) => a.r.secs - b.r.secs);
+
+  const females  = finished.filter(m => m.gender === 'F');
+  const total    = members.length;
+  const nDone    = finished.length;
+
+  if (nDone === 0 || !Object.keys(resultMap).length)
+    return { status: 'nodata',     score: null, scoring: [], finished, total };
+  if (nDone < 4)
+    return { status: 'waiting',    score: null, scoring: [], finished, total };
+  if (females.length === 0)
+    return { status: 'no_female',  score: null, scoring: [], finished, total };
+
+  const top4 = finished.slice(0, 4);
+  let scoring;
+  if (top4.some(m => m.gender === 'F')) {
+    scoring = top4;
+  } else {
+    // Swap slowest of top 4 for fastest female
+    scoring = [...top4.slice(0, 3), females[0]]
+      .sort((a, b) => a.r.secs - b.r.secs);
+  }
+
+  const avgSecs = Math.round(scoring.reduce((s, m) => s + m.r.secs, 0) / 4);
+  return { status: 'valid', score: avgSecs, scoring, finished, total };
+}
+
+// ─── Render: my team ──────────────────────────────────────
+function renderMyTeam() {
+  const el      = document.getElementById('my-team-section');
+  const members = teams[MY_TEAM];
+
+  if (!members) {
+    el.innerHTML = '<div class="error-box">Team "' + MY_TEAM + '" not found in start list.</div>';
+    return;
+  }
+
+  const { status, score, scoring, finished, total } = calcScore(members);
+  const scoringBibs = new Set(scoring.map(m => m.bib));
+
+  const scoreHtml = {
+    valid:     `<span class="score-valid">${fmt(score)}</span>`,
+    waiting:   `<span class="score-wait">&#x23F3; ${finished.length}/${total} done</span>`,
+    no_female: `<span class="score-bad">&#x26A0; No female finisher</span>`,
+    nodata:    `<span class="score-wait">Waiting for results…</span>`,
+  }[status];
+
+  const rows = members.map(m => {
+    const r       = resultMap[m.bib];
+    const timeHtml = r
+      ? `<span class="member-time">${r.time}</span>`
+      : `<span class="member-time dnf">not yet</span>`;
+    const starHtml = scoringBibs.has(m.bib) ? '<span class="star">&#9733;</span>' : '';
+    return `<div class="member-row">
+      <div class="gender-badge gender-${m.gender}">${m.gender}</div>
+      <div class="member-name">${esc(m.name)}</div>
+      ${timeHtml}${starHtml}
+    </div>`;
+  }).join('');
+
+  const note = status === 'valid'
+    ? '<div class="score-note">&#9733; = counted in team score (avg of best 4, ≥1 female)</div>'
+    : '';
+
+  el.innerHTML = `
+    <div class="my-team-card">
+      <div class="my-team-card-header">
+        <span class="name">${esc(MY_TEAM)}</span>
+        <span class="score">${scoreHtml}</span>
+      </div>
+      ${rows}
+      ${note}
+    </div>`;
+}
+
+// ─── Render: rankings ─────────────────────────────────────
+function renderRankings() {
+  const el = document.getElementById('rankings-section');
+
+  const rows = Object.entries(teams)
+    .map(([name, members]) => ({ name, ...calcScore(members) }))
+    .sort((a, b) => {
+      if (a.status === 'valid'  && b.status === 'valid')  return a.score - b.score;
+      if (a.status === 'valid')  return -1;
+      if (b.status === 'valid')  return  1;
+      if (a.status === 'waiting' && b.status === 'waiting')
+        return b.finished.length - a.finished.length;
+      if (a.status === 'waiting') return -1;
+      if (b.status === 'waiting') return  1;
+      return a.name.localeCompare(b.name);
+    });
+
+  let rank = 0;
+  const html = rows.map(t => {
+    const isMe   = t.name === MY_TEAM;
+    if (t.status === 'valid') rank++;
+    const posNum = t.status === 'valid' ? rank : '—';
+    const posClass = rank <= 3 && t.status === 'valid' ? `rank-${rank}` : '';
+
+    const scoreHtml = {
+      valid:     `<span class="team-row-score score-valid">${fmt(t.score)}</span>`,
+      waiting:   `<span class="team-row-score score-wait">—</span>`,
+      no_female: `<span class="team-row-score score-bad">&#x26A0;</span>`,
+      nodata:    `<span class="team-row-score" style="color:#444">—</span>`,
+    }[t.status];
+
+    const progress = `<span class="team-row-progress">${t.finished.length}/${t.total}</span>`;
+
+    return `<div class="team-row${isMe ? ' is-mine' : ''}">
+      <div class="rank-pos ${posClass}">${posNum}</div>
+      <div class="team-row-name">${isMe ? '&#9733; ' : ''}${esc(t.name)}</div>
+      ${scoreHtml}
+      ${progress}
+    </div>`;
+  }).join('');
+
+  el.innerHTML = `<div class="rankings-card">${html}</div>`;
+}
+
+// ─── Status bar ───────────────────────────────────────────
+function updateStatus() {
+  const el  = document.getElementById('status-text');
+  const now = new Date().toLocaleTimeString();
+  const nResults = Object.keys(resultMap).length;
+
+  if (loadError) {
+    el.textContent = `Error: ${loadError}`;
+    return;
+  }
+  if (!Object.keys(teams).length) {
+    el.textContent = 'Loading start list…';
+    return;
+  }
+  if (!resultsUrl) {
+    el.textContent = 'Start list loaded · Paste results URL above';
+    return;
+  }
+  el.textContent = nResults
+    ? `${nResults} results · ${now} · refresh in ${countdown}s`
+    : `No results yet · ${now} · refresh in ${countdown}s`;
+}
+
+// ─── URL handling ─────────────────────────────────────────
+function applyResultsUrl() {
+  const val = document.getElementById('results-url-input').value.trim();
+  if (!val) return;
+  resultsUrl = val;
+  localStorage.setItem('spartan_results_url', val);
+  document.getElementById('url-clear-wrap').style.display = 'block';
+  manualRefresh();
+}
+
+function clearResultsUrl() {
+  resultsUrl = '';
+  resultMap  = {};
+  localStorage.removeItem('spartan_results_url');
+  document.getElementById('results-url-input').value = '';
+  document.getElementById('url-clear-wrap').style.display = 'none';
+  renderMyTeam();
+  renderRankings();
+  updateStatus();
+}
+
+function esc(s) {
+  return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ─── Refresh loop ─────────────────────────────────────────
+async function refreshResults() {
+  if (!resultsUrl) return;
+  try {
+    const r = await loadResults();
+    if (r) resultMap = r;
+  } catch (e) {
+    console.warn('Results fetch failed:', e.message);
+  }
+}
+
+function startTicker() {
+  if (ticker) clearInterval(ticker);
+  countdown = INTERVAL;
+  ticker = setInterval(async () => {
+    countdown--;
+    if (countdown <= 0) {
+      countdown = INTERVAL;
+      await refreshResults();
+      renderMyTeam();
+      renderRankings();
+    }
+    updateStatus();
+  }, 1000);
+}
+
+async function manualRefresh() {
+  await refreshResults();
+  renderMyTeam();
+  renderRankings();
+  countdown = INTERVAL;
+  updateStatus();
+}
+
+// ─── Boot ─────────────────────────────────────────────────
+async function init() {
+  // Restore saved URL
+  if (resultsUrl) {
+    document.getElementById('results-url-input').value = resultsUrl;
+    document.getElementById('url-clear-wrap').style.display = 'block';
+  }
+
+  updateStatus();
+
+  try {
+    teams = await loadStartList();
+  } catch (e) {
+    loadError = e.message;
+    document.getElementById('my-team-section').innerHTML =
+      `<div class="error-box">Could not load start list: ${esc(e.message)}<br>
+       Check your internet connection and try refreshing.</div>`;
+    document.getElementById('rankings-section').innerHTML = '';
+    updateStatus();
+    return;
+  }
+
+  if (resultsUrl) {
+    await refreshResults();
+  }
+
+  renderMyTeam();
+  renderRankings();
+  updateStatus();
+  startTicker();
+}
+
+init();
+</script>
+</body>
+</html>
