@@ -280,6 +280,10 @@ async function applyConfig() {
     showSettingsStatus('❌ Invalid URL — must contain id= and idTrack=', 'err');
     return;
   }
+  if (!name) {
+    showSettingsStatus('❌ Please enter a race name (e.g. Bielsko-Biała Ultra STG 2026)', 'err');
+    return;
+  }
 
   // Determine PAT — if field shows bullets, use saved one
   let pat = patVal;
@@ -292,7 +296,7 @@ async function applyConfig() {
   }
   localStorage.setItem('gh_pat', pat);
 
-  const raceName = name || `Race ${eventId} / Track ${idTrack}`;
+  const raceName = name;
 
   showSettingsStatus('⏳ Updating config on GitHub…', 'loading');
 
