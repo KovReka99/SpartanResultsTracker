@@ -2,11 +2,11 @@ name: Fetch Race Data
 
 on:
   schedule:
-    - cron: '*/5 * * * *'   # runs every 5 minutes
-  workflow_dispatch:          # lets you trigger it manually from GitHub
+    - cron: '*/5 * * * *'   # every 5 minutes
+  workflow_dispatch:          # manual trigger from GitHub Actions tab
   push:
     paths:
-      - '.github/workflows/fetch.yml'   # reruns immediately when you update the track ID
+      - 'config.json'         # reruns immediately when you change the race config
 
 permissions:
   contents: write
@@ -15,33 +15,31 @@ jobs:
   fetch:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Fetch race data
+      - name: Read config and fetch
         run: |
-          # ── RACE DAY: replace XXXXX below with the idTrack number from the URL ──
-          # How to find it: open live.onlinesystem.cz → Bielsko-Biała Ultra →
-          # select the STG/Ultra category → copy the idTrack= number from the URL
-          TRACK_ID="XXXXX"
+          EVENT_ID=$(jq -r '.eventId' config.json)
+          TRACK_ID=$(jq -r '.idTrack' config.json)
+          RACE_NAME=$(jq -r '.raceName' config.json)
+          TIMESTAMP=$(date -u +"%H:%M UTC")
 
-          if [ "$TRACK_ID" = "XXXXX" ]; then
-            echo '{"status":"waiting","message":"Track ID not set yet — update this file on race day"}' > results.json
-            echo "Track ID not configured yet, wrote placeholder."
+          echo "Event: $RACE_NAME  |  eventId=$EVENT_ID  idTrack=$TRACK_ID"
+
+          if [ -z "$TRACK_ID" ] || [ "$TRACK_ID" = "null" ] || [ "$TRACK_ID" = "" ]; then
+            echo '{"status":"waiting","message":"idTrack not set in config.json"}' > results.json
             exit 0
           fi
 
           curl -sf \
             -H "Accept: application/json" \
             -H "User-Agent: Mozilla/5.0 (compatible; SpartanTracker/1.0)" \
-            "https://live.onlinesystem.cz/api/ResultsList/List/?searchText=&category=&eventId=3579&idTrack=${TRACK_ID}&exportType=5&take=5000&skip=0&page=1&pageSize=5000&sort%5B0%5D%5Bfield%5D=OrA&sort%5B0%5D%5Bdir%5D=asc" \
+            "https://live.onlinesystem.cz/api/ResultsList/List/?searchText=&category=&eventId=${EVENT_ID}&idTrack=${TRACK_ID}&exportType=5&take=5000&skip=0&page=1&pageSize=5000&sort%5B0%5D%5Bfield%5D=OrA&sort%5B0%5D%5Bdir%5D=asc" \
             -o raw.json
 
-          # Wrap with a timestamp so the app knows when data was last fetched
-          TIMESTAMP=$(date -u +"%H:%M UTC")
-          echo "{\"updated\":\"${TIMESTAMP}\",\"data\":$(cat raw.json)}" > results.json
-
-          echo "Done — $(wc -c < results.json) bytes written"
+          echo "{\"updated\":\"${TIMESTAMP}\",\"raceName\":\"${RACE_NAME}\",\"data\":$(cat raw.json)}" > results.json
+          echo "Done — $(wc -c < results.json) bytes"
 
       - name: Commit and push
         run: |

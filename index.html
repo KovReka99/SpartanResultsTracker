@@ -122,7 +122,7 @@
 
 <header>
   <h1>Spartan STG Tracker</h1>
-  <p>Bielsko-Biała Ultra &middot; 29 August 2026</p>
+  <p id="race-name">Loading…</p>
 </header>
 
 <div class="status-bar">
@@ -159,10 +159,10 @@ async function fetchData() {
   const json = await r.json();
 
   // File can be: plain array, {updated,data:[...]}, or {status,message}
-  if (Array.isArray(json)) return { data: json, updated: null };
-  if (json.status === 'waiting') return { data: [], updated: null, message: json.message };
-  if (json.data)                 return { data: json.data, updated: json.updated || null };
-  return { data: [], updated: null };
+  if (Array.isArray(json)) return { data: json, updated: null, raceName: null };
+  if (json.status === 'waiting') return { data: [], updated: null, raceName: null, message: json.message };
+  if (json.data)                 return { data: json.data, updated: json.updated || null, raceName: json.raceName || null };
+  return { data: [], updated: null, raceName: null };
 }
 
 // ── Time helpers ─────────────────────────────────────────
@@ -375,15 +375,17 @@ let lastUpdated = null;
 async function refresh() {
   setStatus('Loading…');
   try {
-    const { data, updated, message } = await fetchData();
+    const { data, updated, raceName, message } = await fetchData();
+    if (raceName) document.getElementById('race-name').textContent = raceName;
     lastUpdated = updated || lastUpdated;
 
     if (data.length === 0 && message) {
-      setStatus('Race not started yet — track ID not configured');
+      setStatus('idTrack not set — edit config.json');
       document.getElementById('my-team').innerHTML = `<div class="info-box">
-        <b>Race data not configured yet.</b><br><br>
-        On race morning: open the GitHub workflow file and replace <b>XXXXX</b>
-        with the track ID from live.onlinesystem.cz.
+        <b>No race configured yet.</b><br><br>
+        Edit <b>config.json</b> in the repo with the correct
+        <b>eventId</b> and <b>idTrack</b>, then commit.
+        The Action will fetch data within a minute.
       </div>`;
       document.getElementById('rankings').innerHTML = '';
       document.getElementById('team-count').textContent = '';
