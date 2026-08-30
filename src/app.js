@@ -187,7 +187,7 @@ function processEntries(raw) {
 
     const team       = stgName || clubField || teamField || 'STG Unknown';
     const splitData  = parseLastSplit(e.Splits);
-    const secs       = parseSecs(e.Result);
+    const secs       = e.Status === 1 ? parseSecs(e.Result) : null;
 
     if (!out[team]) out[team] = [];
     out[team].push({
