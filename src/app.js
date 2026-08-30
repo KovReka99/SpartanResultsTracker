@@ -188,6 +188,7 @@ function processEntries(raw) {
     const team       = stgName || clubField || teamField || 'STG Unknown';
     const splitData  = parseLastSplit(e.Splits);
     const secs       = e.Status === 1 ? parseSecs(e.Result) : null;
+    const eligible   = cat !== 'EM' && cat !== 'EW';  // Elite athletes don't count toward STG team score
 
     if (!out[team]) out[team] = [];
     out[team].push({
@@ -196,6 +197,7 @@ function processEntries(raw) {
       bib:       e.Bib,
       time:      secs != null ? e.Result.trim() : null,
       secs,
+      eligible,
       cp:        splitData ? splitData.cp : 0,
       splitTime: splitData ? splitData.timeStr : null,
       splits:    Array.isArray(e.Splits) ? e.Splits : [],
@@ -219,17 +221,18 @@ function processEntries(raw) {
 function calcScore(members) {
   const finished = members.filter(m => m.secs != null);
   const onCourse = members.filter(m => m.secs == null && m.cp > 0);
-  const females  = finished.filter(m => m.sex === 'F');
+  const eligible = finished.filter(m => m.eligible);
+  const females  = eligible.filter(m => m.sex === 'F');
   const total    = members.length;
 
-  if (finished.length === 0)
+  if (eligible.length === 0)
     return { status: 'nodata',    score: null, scoring: [], finished, onCourse, total };
-  if (finished.length < 4)
+  if (eligible.length < 4)
     return { status: 'waiting',   score: null, scoring: [], finished, onCourse, total };
   if (females.length === 0)
     return { status: 'no_female', score: null, scoring: [], finished, onCourse, total };
 
-  const top4 = finished.slice(0, 4);
+  const top4 = eligible.slice(0, 4);
   const scoring = top4.some(m => m.sex === 'F')
     ? top4
     : [...top4.slice(0, 3), females[0]].sort((a, b) => a.secs - b.secs);
@@ -247,6 +250,7 @@ function getSecsAtCP(member, cpNum) {
 
 function calcCPTeamScore(members, cpNum) {
   const withTime = members
+    .filter(m => m.eligible)
     .map(m => ({ ...m, secs: getSecsAtCP(m, cpNum) }))
     .filter(m => m.secs != null)
     .sort((a, b) => a.secs - b.secs);
