@@ -188,7 +188,7 @@ function processEntries(raw) {
     const team       = stgName || clubField || teamField || 'STG Unknown';
     const splitData  = parseLastSplit(e.Splits);
     const secs       = e.Status === 1 ? parseSecs(e.Result) : null;
-    const eligible   = cat !== 'EM' && cat !== 'EW';  // Elite athletes don't count toward STG team score
+    const eligible   = cat === 'OM' || cat === 'OW';  // only Open Men/Women count toward STG team score
 
     if (!out[team]) out[team] = [];
     out[team].push({
