@@ -432,10 +432,19 @@ function fmtUpdated(s) {
   return s;
 }
 
+function dataAgeMinutes() {
+  if (!lastUpdated) return null;
+  return Math.floor((Date.now() - new Date(lastUpdated)) / 60000);
+}
+
 function updateStatus() {
   const n   = Object.values(teams).reduce((s, m) => s + m.filter(x => x.secs).length, 0);
   const age = lastUpdated ? ` · data from ${fmtUpdated(lastUpdated)}` : '';
   setStatus(`${n} finishers · refresh in ${countdown}s${age}`);
+
+  const mins = dataAgeMinutes();
+  const banner = document.getElementById('stale-banner');
+  if (banner) banner.style.display = (mins !== null && mins >= 10) ? 'block' : 'none';
 }
 
 // ── Refresh loop ──────────────────────────────────────────
