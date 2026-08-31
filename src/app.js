@@ -4,11 +4,12 @@ const INTERVAL = 60;
 const REPO     = 'KovReka99/SpartanResultsTracker';
 
 // ── State ─────────────────────────────────────────────────
-let teams     = {};
-let ticker    = null;
-let countdown = INTERVAL;
-let expanded  = new Set();
+let teams       = {};
+let ticker      = null;
+let countdown   = INTERVAL;
+let expanded    = new Set();
 let lastUpdated = null;
+let stgStartSecs = null;
 
 // ── Settings panel ────────────────────────────────────────
 function toggleSettings() {
@@ -20,6 +21,8 @@ function toggleSettings() {
   if (isOpen) {
     const pat = localStorage.getItem('gh_pat') || '';
     document.getElementById('set-pat').value = pat ? '••••••••' : '';
+    document.getElementById('set-stg-start').value =
+      stgStartSecs != null ? secsToHHMM(stgStartSecs) : '';
   }
 }
 
@@ -36,9 +39,10 @@ function showSettingsStatus(msg, type) {
 }
 
 async function applyConfig() {
-  const rawUrl = document.getElementById('set-url').value.trim();
-  const name   = document.getElementById('set-name').value.trim();
-  const patVal = document.getElementById('set-pat').value.trim();
+  const rawUrl   = document.getElementById('set-url').value.trim();
+  const name     = document.getElementById('set-name').value.trim();
+  const patVal   = document.getElementById('set-pat').value.trim();
+  const stgStart = document.getElementById('set-stg-start').value.trim();
 
   let eventId = '', idTrack = '';
   try {
@@ -55,6 +59,10 @@ async function applyConfig() {
     showSettingsStatus('❌ Please enter a race name (e.g. Bielsko-Biała Ultra STG 2026)', 'err');
     return;
   }
+  if (stgStart && !parseHHMM(stgStart)) {
+    showSettingsStatus('❌ STG Start Time must be HH:MM (e.g. 09:00)', 'err');
+    return;
+  }
 
   let pat = patVal;
   if (pat === '••••••••' || pat === '') pat = localStorage.getItem('gh_pat') || '';
@@ -66,7 +74,8 @@ async function applyConfig() {
 
   showSettingsStatus('⏳ Updating config on GitHub…', 'loading');
   try {
-    await updateGitHubConfig({ eventId, idTrack, raceName: name }, pat);
+    await updateGitHubConfig({ eventId, idTrack, raceName: name, stgStartTime: stgStart }, pat);
+    stgStartSecs = stgStart ? parseHHMM(stgStart) : null;
     showSettingsStatus(`✓ Switched to "${name}". Data will update within ~1 minute.`, 'ok');
     document.getElementById('set-pat').value = '••••••••';
     setTimeout(() => manualRefresh(), 15000);
@@ -107,6 +116,17 @@ async function updateGitHubConfig(config, pat) {
     const j = await putRes.json().catch(() => ({}));
     throw new Error(j.message || `GitHub API error ${putRes.status}`);
   }
+}
+
+// ── Config ────────────────────────────────────────────────
+async function fetchConfig() {
+  try {
+    const r = await fetch(`./config.json?t=${Date.now()}`, { signal: AbortSignal.timeout(5000) });
+    if (!r.ok) return;
+    const c = await r.json();
+    const raw = (c.stgStartTime || '').trim();
+    stgStartSecs = raw ? parseHHMM(raw) : null;
+  } catch { /* ignore — filter just won't apply */ }
 }
 
 // ── Fetch results.json (same domain, no CORS) ─────────────
@@ -170,6 +190,28 @@ function parseLastSplit(splits) {
   return { cp: splits.length, timeStr: T, dtStr: DT };
 }
 
+function parseHHMM(s) {
+  if (!s) return null;
+  const m = s.trim().match(/^(\d{1,2}):(\d{2})$/);
+  return m ? Number(m[1]) * 3600 + Number(m[2]) * 60 : null;
+}
+
+function secsToHHMM(secs) {
+  const h = Math.floor(secs / 3600);
+  const m = Math.floor((secs % 3600) / 60);
+  return `${pad(h)}:${pad(m)}`;
+}
+
+function athleteStartSecs(splits) {
+  if (!Array.isArray(splits) || splits.length === 0) return null;
+  const { T, DT } = parseSplit(splits[0]);
+  if (!T || !DT) return null;
+  const chipSecs = parseSecs(T);
+  const dtMatch  = String(DT).match(/(\d{1,2}):(\d{2})\s*$/);
+  if (chipSecs == null || !dtMatch) return null;
+  return Number(dtMatch[1]) * 3600 + Number(dtMatch[2]) * 60 - chipSecs;
+}
+
 // ── Process entries ───────────────────────────────────────
 function processEntries(raw) {
   if (!Array.isArray(raw)) return {};
@@ -185,6 +227,11 @@ function processEntries(raw) {
                   : /^STG/i.test(clubField)  ? clubField
                   : null;
     if (!stgName && !/STG/i.test(cat)) continue;
+
+    if (stgStartSecs !== null) {
+      const start = athleteStartSecs(e.Splits);
+      if (start === null || Math.abs(start - stgStartSecs) > 600) continue;
+    }
 
     const team       = stgName || clubField || teamField || 'STG Unknown';
     const splitData  = parseLastSplit(e.Splits);
@@ -457,6 +504,7 @@ async function refresh() {
   setLoading(true);
   setStatus('Loading…');
   try {
+    await fetchConfig();
     const { data, updated, raceName, message } = await fetchData();
     if (updated) lastUpdated = updated;
     if (raceName) document.getElementById('race-name').textContent = raceName;
