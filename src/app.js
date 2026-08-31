@@ -236,17 +236,19 @@ function processEntries(raw) {
     const clubField = (e.Club || '').trim();
     const cat       = (e.C   || '').trim();
 
-    const stgName = /^STG/i.test(teamField) ? teamField
-                  : /^STG/i.test(clubField)  ? clubField
-                  : null;
-    if (!stgName && !/STG/i.test(cat)) continue;
-
     if (stgStartTimes.length > 0) {
+      // Start time is configured: use it as the primary STG filter.
+      // Any athlete with a non-empty team who started in an STG wave counts.
+      if (!teamField) continue;
       const start = athleteStartSecs(e.Splits);
       if (start === null || !stgStartTimes.some(t => Math.abs(start - t) <= 600)) continue;
+    } else {
+      // No start time configured: fall back to requiring team/club/cat to start with STG.
+      const hasStg = /^STG/i.test(teamField) || /^STG/i.test(clubField) || /STG/i.test(cat);
+      if (!hasStg) continue;
     }
 
-    const team       = stgName || clubField || teamField || 'STG Unknown';
+    const team       = teamField || clubField || 'STG Unknown';
     const splitData  = parseLastSplit(e.Splits);
     const secs       = e.Status === 1 ? parseSecs(e.Result) : null;
     const eligible   = (cat === 'OM' || cat === 'OW');
