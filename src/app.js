@@ -174,13 +174,6 @@ function parseLastSplit(splits) {
 function processEntries(raw) {
   if (!Array.isArray(raw)) return {};
 
-  // Auto-detect full race distance: the max split count among all finishers.
-  // Athletes missing more than 2 mats are assumed to have run a shorter distance.
-  const maxSplits = raw
-    .filter(e => e.Status === 1)
-    .reduce((m, e) => Math.max(m, (e.Splits || []).length), 0);
-  const minSplits = Math.max(1, maxSplits - 2);
-
   const out = {};
 
   for (const e of raw) {
@@ -196,8 +189,7 @@ function processEntries(raw) {
     const team       = stgName || clubField || teamField || 'STG Unknown';
     const splitData  = parseLastSplit(e.Splits);
     const secs       = e.Status === 1 ? parseSecs(e.Result) : null;
-    const eligible   = (cat === 'OM' || cat === 'OW')  // only Open category
-                    && (e.Splits || []).length >= minSplits;  // must have finished the full race distance
+    const eligible   = (cat === 'OM' || cat === 'OW');
 
     if (!out[team]) out[team] = [];
     out[team].push({
