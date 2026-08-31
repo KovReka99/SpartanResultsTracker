@@ -9,7 +9,7 @@ let ticker      = null;
 let countdown   = INTERVAL;
 let expanded    = new Set();
 let lastUpdated = null;
-let stgStartSecs = null;
+let stgStartTimes = [];
 
 // ── Settings panel ────────────────────────────────────────
 function toggleSettings() {
@@ -22,7 +22,7 @@ function toggleSettings() {
     const pat = localStorage.getItem('gh_pat') || '';
     document.getElementById('set-pat').value = pat ? '••••••••' : '';
     document.getElementById('set-stg-start').value =
-      stgStartSecs != null ? secsToHHMM(stgStartSecs) : '';
+      stgStartTimes.length ? stgStartTimes.map(secsToHHMM).join(', ') : '';
   }
 }
 
@@ -59,8 +59,8 @@ async function applyConfig() {
     showSettingsStatus('❌ Please enter a race name (e.g. Bielsko-Biała Ultra STG 2026)', 'err');
     return;
   }
-  if (stgStart && !parseHHMM(stgStart)) {
-    showSettingsStatus('❌ STG Start Time must be HH:MM (e.g. 09:00)', 'err');
+  if (stgStart && parseStartTimes(stgStart).length === 0) {
+    showSettingsStatus('❌ STG Start Times must be HH:MM, comma-separated (e.g. 09:00, 09:30)', 'err');
     return;
   }
 
@@ -75,7 +75,7 @@ async function applyConfig() {
   showSettingsStatus('⏳ Updating config on GitHub…', 'loading');
   try {
     await updateGitHubConfig({ eventId, idTrack, raceName: name, stgStartTime: stgStart }, pat);
-    stgStartSecs = stgStart ? parseHHMM(stgStart) : null;
+    stgStartTimes = parseStartTimes(stgStart);
     showSettingsStatus(`✓ Switched to "${name}". Data will update within ~1 minute.`, 'ok');
     document.getElementById('set-pat').value = '••••••••';
     setTimeout(() => manualRefresh(), 15000);
@@ -124,9 +124,14 @@ async function fetchConfig() {
     const r = await fetch(`./config.json?t=${Date.now()}`, { signal: AbortSignal.timeout(5000) });
     if (!r.ok) return;
     const c = await r.json();
-    const raw = (c.stgStartTime || '').trim();
-    stgStartSecs = raw ? parseHHMM(raw) : null;
+    stgStartTimes = parseStartTimes(c.stgStartTime || '');
   } catch { /* ignore — filter just won't apply */ }
+}
+
+function parseStartTimes(raw) {
+  return raw.split(',')
+    .map(s => parseHHMM(s.trim()))
+    .filter(v => v !== null);
 }
 
 // ── Fetch results.json (same domain, no CORS) ─────────────
@@ -228,9 +233,9 @@ function processEntries(raw) {
                   : null;
     if (!stgName && !/STG/i.test(cat)) continue;
 
-    if (stgStartSecs !== null) {
+    if (stgStartTimes.length > 0) {
       const start = athleteStartSecs(e.Splits);
-      if (start === null || Math.abs(start - stgStartSecs) > 600) continue;
+      if (start === null || !stgStartTimes.some(t => Math.abs(start - t) <= 600)) continue;
     }
 
     const team       = stgName || clubField || teamField || 'STG Unknown';
