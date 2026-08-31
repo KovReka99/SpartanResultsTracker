@@ -10,6 +10,7 @@ let countdown   = INTERVAL;
 let expanded    = new Set();
 let lastUpdated = null;
 let stgStartTimes = [];
+let currentConfig = {};
 
 // ── Settings panel ────────────────────────────────────────
 function toggleSettings() {
@@ -19,10 +20,16 @@ function toggleSettings() {
   btn.classList.toggle('active', isOpen);
 
   if (isOpen) {
+    const { eventId, idTrack, raceName, stgStartTime } = currentConfig;
+    if (eventId && idTrack)
+      document.getElementById('set-url').value =
+        `https://live.onlinesystem.cz/results?id=${eventId}&idTrack=${idTrack}`;
+    if (raceName)
+      document.getElementById('set-name').value = raceName;
+    document.getElementById('set-stg-start').value =
+      stgStartTimes.length ? stgStartTimes.map(secsToHHMM).join(', ') : (stgStartTime || '');
     const pat = localStorage.getItem('gh_pat') || '';
     document.getElementById('set-pat').value = pat ? '••••••••' : '';
-    document.getElementById('set-stg-start').value =
-      stgStartTimes.length ? stgStartTimes.map(secsToHHMM).join(', ') : '';
   }
 }
 
@@ -124,6 +131,7 @@ async function fetchConfig() {
     const r = await fetch(`./config.json?t=${Date.now()}`, { signal: AbortSignal.timeout(5000) });
     if (!r.ok) return;
     const c = await r.json();
+    currentConfig = c;
     stgStartTimes = parseStartTimes(c.stgStartTime || '');
   } catch { /* ignore — filter just won't apply */ }
 }
