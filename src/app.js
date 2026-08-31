@@ -241,7 +241,7 @@ function processEntries(raw) {
       // Any athlete with a non-empty team who started in an STG wave counts.
       if (!teamField) continue;
       const start = athleteStartSecs(e.Splits);
-      if (start === null || !stgStartTimes.some(t => Math.abs(start - t) <= 600)) continue;
+      if (start === null || !stgStartTimes.some(t => start >= t && (start - t) <= 600)) continue;
     } else {
       // No start time configured: fall back to requiring team/club/cat to start with STG.
       const hasStg = /^STG/i.test(teamField) || /^STG/i.test(clubField) || /STG/i.test(cat);
