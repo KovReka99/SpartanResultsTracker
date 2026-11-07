@@ -18,6 +18,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Fetch STG start list (once per event)
+        run: |
+          START_EVENT_ID=$(jq -r '.startListEventId // empty' config.json)
+          if [ -z "$START_EVENT_ID" ]; then
+            echo "No startListEventId in config — skipping"
+            exit 0
+          fi
+          CACHED_ID=$(jq -r '.eventId // empty' stg_bibs.json 2>/dev/null || echo "")
+          if [ "$CACHED_ID" = "$START_EVENT_ID" ]; then
+            echo "Start list already cached for event $START_EVENT_ID ($(jq '.bibs|length' stg_bibs.json) bibs)"
+            exit 0
+          fi
+          echo "Fetching start list for event $START_EVENT_ID..."
+          python3 scripts/fetch_stg_bibs.py "$START_EVENT_ID"
+
       - name: Read config and fetch
         run: |
           EVENT_ID=$(jq -r '.eventId' config.json)
@@ -45,7 +60,7 @@ jobs:
         run: |
           git config user.email "actions@github.com"
           git config user.name "Race Data Bot"
-          git add results.json
+          git add results.json stg_bibs.json
           git diff --staged --quiet || git commit -m "Race data $(date -u +'%H:%M UTC')"
           git pull --rebase origin main
           git push

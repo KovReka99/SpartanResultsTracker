@@ -9,7 +9,7 @@ let ticker      = null;
 let countdown   = INTERVAL;
 let expanded    = new Set();
 let lastUpdated = null;
-let stgStartTimes = [];
+let stgBibs       = new Set();
 let currentConfig = {};
 
 // ── Settings panel ────────────────────────────────────────
@@ -20,14 +20,16 @@ function toggleSettings() {
   btn.classList.toggle('active', isOpen);
 
   if (isOpen) {
-    const { eventId, idTrack, raceName, stgStartTime } = currentConfig;
+    const { eventId, idTrack, raceName, startListEventId } = currentConfig;
     if (eventId && idTrack)
       document.getElementById('set-url').value =
         `https://live.onlinesystem.cz/results?id=${eventId}&idTrack=${idTrack}`;
     if (raceName)
       document.getElementById('set-name').value = raceName;
-    document.getElementById('set-stg-start').value =
-      stgStartTimes.length ? stgStartTimes.map(secsToHHMM).join(', ') : (stgStartTime || '');
+    document.getElementById('set-startlist-url').value =
+      startListEventId
+        ? `https://spartanrace.onlinesystem.cz/Events/StartList?eventid=${startListEventId}`
+        : '';
     const pat = localStorage.getItem('gh_pat') || '';
     document.getElementById('set-pat').value = pat ? '••••••••' : '';
   }
@@ -46,10 +48,10 @@ function showSettingsStatus(msg, type) {
 }
 
 async function applyConfig() {
-  const rawUrl   = document.getElementById('set-url').value.trim();
-  const name     = document.getElementById('set-name').value.trim();
-  const patVal   = document.getElementById('set-pat').value.trim();
-  const stgStart = document.getElementById('set-stg-start').value.trim();
+  const rawUrl         = document.getElementById('set-url').value.trim();
+  const name           = document.getElementById('set-name').value.trim();
+  const patVal         = document.getElementById('set-pat').value.trim();
+  const rawStartList   = document.getElementById('set-startlist-url').value.trim();
 
   let eventId = '', idTrack = '';
   try {
@@ -59,16 +61,23 @@ async function applyConfig() {
   } catch {}
 
   if (!eventId || !idTrack) {
-    showSettingsStatus('❌ Invalid URL — must contain id= and idTrack=', 'err');
+    showSettingsStatus('❌ Invalid Race URL — must contain id= and idTrack=', 'err');
     return;
   }
   if (!name) {
-    showSettingsStatus('❌ Please enter a race name (e.g. Bielsko-Biała Ultra STG 2026)', 'err');
+    showSettingsStatus('❌ Please enter a race name', 'err');
     return;
   }
-  if (stgStart && parseStartTimes(stgStart).length === 0) {
-    showSettingsStatus('❌ STG Start Times must be HH:MM, comma-separated (e.g. 09:00, 09:30)', 'err');
-    return;
+
+  let startListEventId = '';
+  if (rawStartList) {
+    try {
+      startListEventId = new URL(rawStartList).searchParams.get('eventid') || '';
+    } catch {}
+    if (!startListEventId) {
+      showSettingsStatus('❌ Invalid Start List URL — must contain eventid=', 'err');
+      return;
+    }
   }
 
   let pat = patVal;
@@ -81,8 +90,10 @@ async function applyConfig() {
 
   showSettingsStatus('⏳ Updating config on GitHub…', 'loading');
   try {
-    await updateGitHubConfig({ eventId, idTrack, raceName: name, stgStartTime: stgStart }, pat);
-    stgStartTimes = parseStartTimes(stgStart);
+    const cfg = { eventId, idTrack, raceName: name };
+    if (startListEventId) cfg.startListEventId = startListEventId;
+    await updateGitHubConfig(cfg, pat);
+    stgBibs = new Set();  // reset — workflow will re-fetch bibs for the new event
     showSettingsStatus(`✓ Switched to "${name}". Data will update within ~1 minute.`, 'ok');
     document.getElementById('set-pat').value = '••••••••';
     setTimeout(() => manualRefresh(), 15000);
@@ -130,16 +141,16 @@ async function fetchConfig() {
   try {
     const r = await fetch(`./config.json?t=${Date.now()}`, { signal: AbortSignal.timeout(5000) });
     if (!r.ok) return;
-    const c = await r.json();
-    currentConfig = c;
-    stgStartTimes = parseStartTimes(c.stgStartTime || '');
-  } catch { /* ignore — filter just won't apply */ }
-}
+    currentConfig = await r.json();
+  } catch { /* ignore */ }
 
-function parseStartTimes(raw) {
-  return raw.split(',')
-    .map(s => parseHHMM(s.trim()))
-    .filter(v => v !== null);
+  try {
+    const r = await fetch(`./stg_bibs.json?t=${Date.now()}`, { signal: AbortSignal.timeout(5000) });
+    if (r.ok) {
+      const d = await r.json();
+      stgBibs = new Set(d.bibs || []);
+    }
+  } catch { /* ignore — fallback to name filter */ }
 }
 
 // ── Fetch results.json (same domain, no CORS) ─────────────
@@ -203,27 +214,6 @@ function parseLastSplit(splits) {
   return { cp: splits.length, timeStr: T, dtStr: DT };
 }
 
-function parseHHMM(s) {
-  if (!s) return null;
-  const m = s.trim().match(/^(\d{1,2}):(\d{2})$/);
-  return m ? Number(m[1]) * 3600 + Number(m[2]) * 60 : null;
-}
-
-function secsToHHMM(secs) {
-  const h = Math.floor(secs / 3600);
-  const m = Math.floor((secs % 3600) / 60);
-  return `${pad(h)}:${pad(m)}`;
-}
-
-function athleteStartSecs(splits) {
-  if (!Array.isArray(splits) || splits.length === 0) return null;
-  const { T, DT } = parseSplit(splits[0]);
-  if (!T || !DT) return null;
-  const chipSecs = parseSecs(T);
-  const dtMatch  = String(DT).match(/(\d{1,2}):(\d{2})\s*$/);
-  if (chipSecs == null || !dtMatch) return null;
-  return Number(dtMatch[1]) * 3600 + Number(dtMatch[2]) * 60 - chipSecs;
-}
 
 // ── Process entries ───────────────────────────────────────
 function processEntries(raw) {
@@ -236,14 +226,11 @@ function processEntries(raw) {
     const clubField = (e.Club || '').trim();
     const cat       = (e.C   || '').trim();
 
-    if (stgStartTimes.length > 0) {
-      // Start time is configured: use it as the primary STG filter.
-      // Any athlete with a non-empty team who started in an STG wave counts.
-      if (!teamField) continue;
-      const start = athleteStartSecs(e.Splits);
-      if (start === null || !stgStartTimes.some(t => start >= t - 120 && (start - t) <= 600)) continue;
+    if (stgBibs.size > 0) {
+      // Start list loaded: only include athletes whose bib is registered in the STG wave.
+      if (!stgBibs.has(e.Bib)) continue;
     } else {
-      // No start time configured: fall back to requiring team/club/cat to start with STG.
+      // No start list yet: fall back to team/club/cat name matching.
       const hasStg = /^STG/i.test(teamField) || /^STG/i.test(clubField) || /STG/i.test(cat);
       if (!hasStg) continue;
     }
